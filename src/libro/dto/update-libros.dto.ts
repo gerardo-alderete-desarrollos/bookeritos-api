@@ -1,10 +1,10 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
-import { CategoriesMuscleEntity } from './../../categories_muscle/entities/categories_muscle.entity';
-import { CreateExcerciseDto } from './create-excercise.dto';
+import { CreateLibroDto } from './create-libros.dto';
+import { CategoriaEntity } from 'src/categoria/entities/categoria.entity';
 
-export class UpdateExcerciseDto extends PartialType(CreateExcerciseDto) {
+export class UpdateLibroDto extends PartialType(CreateLibroDto) {
     @IsNotEmpty()
     @IsString()
     @ApiProperty({ example: 'Press Francess'})
@@ -18,5 +18,5 @@ export class UpdateExcerciseDto extends PartialType(CreateExcerciseDto) {
     updateAt: Date;
     
     @IsNotEmpty()
-    categoriesMuscle: CategoriesMuscleEntity[]
+    categorias: CategoriaEntity[]
 }

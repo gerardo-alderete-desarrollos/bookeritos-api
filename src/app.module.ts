@@ -4,9 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { CategoriesMuscleModule } from './categories_muscle/categories_muscle.module';
-import { ExcercisesModule } from './excercises/excercises.module';
 import { UsersModule } from './users/users.module';
+import { CategoriaModule } from './categoria/categoria.module';
+import { LibroModule } from './libro/libros.module';
 
 @Module({
   imports: [
@@ -32,9 +32,8 @@ import { UsersModule } from './users/users.module';
             : null,
       },
     }),
-
-    ExcercisesModule, 
-    CategoriesMuscleModule,
+    LibroModule,
+    CategoriaModule,
     UsersModule,
     AuthModule],
   controllers: [AppController],

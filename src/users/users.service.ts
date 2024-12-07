@@ -19,7 +19,10 @@ export class UsersService {
         throw new BadRequestException('User already exists')
     }
     
-    createUserDto.userCreateEmail = user.email;
+    if( user ) {
+      createUserDto.userCreateEmail = user.email;
+    }
+
     return await this.userRepository.save(createUserDto);
   }
 
@@ -28,8 +31,10 @@ export class UsersService {
   }
 
   async findByEmailWithPassword(email: string) {
+    console.log(email);
+    
     return await this.userRepository.findOne({
-      //where : {email},
+      where : {email},
       select: ['id', 'name', 'email', 'password', 'rol', 'userCreateEmail']
     })
   }

@@ -2,7 +2,7 @@
 import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Rol } from '../../common/enums/rol.enum';
 
-@Entity('Users')
+@Entity('usuarios')
 export class UserEntity {
 
     @PrimaryGeneratedColumn()

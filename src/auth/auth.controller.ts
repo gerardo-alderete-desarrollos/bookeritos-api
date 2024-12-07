@@ -22,7 +22,7 @@ export class AuthController {
         summary: 'Creación de Usuario'
     })
     @ApiBearerAuth()
-    @AuthDecorator([Rol.ADMIN, Rol.TRAINER, Rol.MEMBER])
+    //@AuthDecorator([Rol.ADMIN, Rol.TRAINER, Rol.MEMBER])
     async register(
         @Body() body: RegisterDto, 
         @Res() res : Response, 

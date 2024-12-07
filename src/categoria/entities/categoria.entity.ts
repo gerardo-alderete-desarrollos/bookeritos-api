@@ -1,9 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { ExcerciseEntity } from "../../excercises/entities/excercise.entity";
+import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from "../../users/entities/user.entity";
+import { LibroEntity } from "src/libro/entities/libros.entity";
 
-@Entity('categories_muscle')
-export class CategoriesMuscleEntity {
+@Entity('categoria')
+export class CategoriaEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -19,8 +19,8 @@ export class CategoriesMuscleEntity {
     @Column()
     updateAt: Date;
  
-    @ManyToMany(() => ExcerciseEntity, (excercises) => excercises.categoriesMuscle)
-    excercises: ExcerciseEntity[];
+    @ManyToMany(() => LibroEntity, (libros) => libros.categorias)
+    libros: LibroEntity[];
 
     @ManyToOne(() => UserEntity)
     @JoinColumn({ name: 'userEmail', referencedColumnName: 'email',  })
@@ -28,4 +28,7 @@ export class CategoriesMuscleEntity {
   
     @Column()
     userEmail: string;
+
+    @DeleteDateColumn()
+    deleteAt: Date;
 }

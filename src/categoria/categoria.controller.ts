@@ -5,16 +5,16 @@ import { AuthDecorator } from '../auth/decorators/auth.decorator';
 import { ActiveUser } from '../common/decorators/active-user.decorator';
 import { Rol } from '../common/enums/rol.enum';
 import { userActiveInterface } from '../common/interfaces/user-active.interface';
-import { CategoriesMuscleService } from './categories_muscle.service';
-import { CreateCategoriesMuscleDto } from './dto/create-categories_muscle.dto';
-import { UpdateCategoriesMuscleDto } from './dto/update-categories_muscle.dto';
+import { CategoriaService } from './categoria.service';
+import { CreateCategoriaDto } from './dto/create-categoria_muscle.dto';
+import { UpdateCategoriaDto } from './dto/update-categoria_muscle.dto';
 
-@ApiTags('Categories Muscle')
+@ApiTags('Categorias')
 @ApiBearerAuth()
 @AuthDecorator([Rol.ADMIN, Rol.TRAINER, Rol.MEMBER])
-@Controller('categories-muscle')
-export class CategoriesMuscleController {
-  constructor(private readonly categoriesMuscleService: CategoriesMuscleService) {}
+@Controller('categorias')
+export class CategoriaController {
+  constructor(private readonly categoriaService: CategoriaService) {}
  
   @Post()
   @ApiOperation({
@@ -25,10 +25,10 @@ export class CategoriesMuscleController {
     description: 'Regresa la Categoria creada'
   })
   async create(
-    @Body() createCategoriesMuscleDto: CreateCategoriesMuscleDto, 
+    @Body() CreateCategoriaDto: CreateCategoriaDto, 
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.categoriesMuscleService.create(createCategoriesMuscleDto, user);
+    const data = await this.categoriaService.create(CreateCategoriaDto, user);
 
     res.status(HttpStatus.CREATED).json({
       data,
@@ -49,11 +49,11 @@ export class CategoriesMuscleController {
   async findAll( 
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.categoriesMuscleService.findAll(user);
+    const data = await this.categoriaService.findAll(user);
 
     res.status(HttpStatus.OK).json({
       data,
-      message: 'Categoria de musculo encontradas',
+      message: 'Categoria  encontradas',
       status: 200
     })
   }
@@ -70,11 +70,11 @@ export class CategoriesMuscleController {
     @Param('id') id: string, 
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.categoriesMuscleService.findOne(+id, user);
+    const data = await this.categoriaService.findOne(+id, user);
 
     res.status(HttpStatus.OK).json({
       data,
-      message: 'Categoria de musculo encontrada',
+      message: 'Categoria encontrada',
       status: 200
     })
 
@@ -90,10 +90,10 @@ export class CategoriesMuscleController {
   })
   async update(
     @Param('id') id: string,
-    @Body() updateCategoriesMuscleDto: UpdateCategoriesMuscleDto,
+    @Body() UpdateCategoriaDto: UpdateCategoriaDto,
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.categoriesMuscleService.update(+id, updateCategoriesMuscleDto, user);
+    const data = await this.categoriaService.update(+id, UpdateCategoriaDto, user);
     
     res.status(HttpStatus.OK).json({
       data,
@@ -114,7 +114,7 @@ export class CategoriesMuscleController {
     @Param('id') id: string,
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.categoriesMuscleService.remove(+id, user);
+    const data = await this.categoriaService.remove(+id, user);
 
     res.status(HttpStatus.OK).json({
       data,

@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDateString, IsNotEmpty, IsString } from "class-validator";
-import { ExcerciseEntity } from "../../excercises/entities/excercise.entity";
+import { LibroEntity } from "src/libro/entities/libros.entity";
 
-export class CreateCategoriesMuscleDto {
+export class CreateCategoriaDto {
     @IsString()
     @IsNotEmpty()
     @ApiProperty({ example: 'Pierna'})
@@ -18,6 +18,6 @@ export class CreateCategoriesMuscleDto {
     updateAt: Date;
 
     @IsNotEmpty()
-    excercises: ExcerciseEntity[]
+    libros: LibroEntity[]
 }
  

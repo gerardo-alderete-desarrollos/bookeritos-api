@@ -5,57 +5,57 @@ import { AuthDecorator } from '../auth/decorators/auth.decorator';
 import { ActiveUser } from '../common/decorators/active-user.decorator';
 import { Rol } from '../common/enums/rol.enum';
 import { userActiveInterface } from '../common/interfaces/user-active.interface';
-import { CreateExcerciseDto } from './dto/create-excercise.dto';
-import { UpdateExcerciseDto } from './dto/update-excercise.dto';
-import { ExcercisesService } from './excercises.service';
+import { LibroService } from './libros.service';
+import { CreateLibroDto } from './dto/create-libros.dto';
+import { UpdateLibroDto } from './dto/update-libros.dto';
 
 
-@ApiTags('Excercises')
+@ApiTags('Libros')
 @ApiBearerAuth()
 @AuthDecorator([Rol.ADMIN, Rol.TRAINER, Rol.MEMBER])
-@Controller('excercises')
-export class ExcercisesController {
-  constructor(private readonly excercisesService: ExcercisesService) {}
+@Controller('libros')
+export class LibroController {
+  constructor(private readonly libroService: LibroService) {}
 
   @Post()
   @ApiOperation({
-    summary: 'Crea un Ejercicio'
+    summary: 'Crea un Libro'
   })
   @ApiResponse({
     status: 201,
-    description: 'Regresa el Ejercicio creado'
+    description: 'Regresa el Libro creado'
   })
   async create(
-    @Body() createExcerciseDto: CreateExcerciseDto, 
+    @Body() CreateLibroDto: CreateLibroDto, 
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-      const data = await this.excercisesService.create(createExcerciseDto, user);
+      const data = await this.libroService.create(CreateLibroDto, user);
 
       res.status(HttpStatus.CREATED).json({ 
         data: data,
-        message: 'Ejercicio creado correctamente',
+        message: 'Libro creado correctamente',
         status: 201
       })
   }
 
   @Get()
   @ApiOperation({
-    summary: 'Obtiene todos los Ejercicios'
+    summary: 'Obtiene todos los Libros'
   })
   @ApiResponse({
     status: 200,
-    description: 'Regresa todos los Ejercicios'
+    description: 'Regresa todos los Libros'
   })
   async findAll(
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface
   ) {
 
-    const data = await this.excercisesService.findAll(user);
+    const data = await this.libroService.findAll(user);
 
     res.status(HttpStatus.OK).json({
       data,
-      message: 'Ejercicios encontrados',
+      message: 'Libros encontrados',
       status: 200
     })
   }
@@ -66,59 +66,59 @@ export class ExcercisesController {
   })
   @ApiResponse({
     status: 200,
-    description: 'Regresa un Ejercicio'
+    description: 'Regresa un Libro'
   })
   async findOne(
     @Param('id') id: string, 
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.excercisesService.findOne(+id, user);
+    const data = await this.libroService.findOne(+id, user);
 
     res.status(HttpStatus.OK).json({
       data,
-      message: 'Ejercicio encontrado',
+      message: 'Libro encontrado',
       status: 200
     })
   }
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Actualiza un Ejercicios'
+    summary: 'Actualiza un Libros'
   })
   @ApiResponse({
     status: 200,
-    description: 'Regresa el Ejercicio actualizado'
+    description: 'Regresa el Libro actualizado'
   })
   async update(
     @Param('id') id: string, 
-    @Body() updateExcerciseDto: UpdateExcerciseDto,
+    @Body() UpdateLibroDto: UpdateLibroDto,
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.excercisesService.update(+id, updateExcerciseDto, user);
+    const data = await this.libroService.update(+id, UpdateLibroDto, user);
     res.status(HttpStatus.OK).json({
       data,
-      message: 'Ejercicio actualizado',
+      message: 'Libro actualizado',
       status: 200
     })
   }
 
   @Delete(':id')
   @ApiOperation({
-    summary: 'Elimina un Ejercicio'
+    summary: 'Elimina un Libro'
   })
   @ApiResponse({
     status: 200,
-    description: 'Elimina un Ejercicio'
+    description: 'Elimina un Libro'
   })
   async remove(
     @Param('id') id: string,
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.excercisesService.remove(+id, user);
+    const data = await this.libroService.remove(+id, user);
 
     res.status(HttpStatus.OK).json({
       data,
-      message: 'Ejercicio eliminado',
+      message: 'Libro eliminado',
       status: 200
     })
   }
