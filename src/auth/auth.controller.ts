@@ -22,7 +22,6 @@ export class AuthController {
         summary: 'Creación de Usuario'
     })
     @ApiBearerAuth()
-    //@AuthDecorator([Rol.ADMIN, Rol.TRAINER, Rol.MEMBER])
     async register(
         @Body() body: RegisterDto, 
         @Res() res : Response, 
@@ -53,7 +52,7 @@ export class AuthController {
         summary: 'Obtiene la informacion del perfil del usuario'
     })
     @ApiBearerAuth()
-    @AuthDecorator([Rol.ADMIN, Rol.TRAINER])
+    @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
     profile(@ActiveUser() user: userActiveInterface){
 
         return this.authService.profile(user);

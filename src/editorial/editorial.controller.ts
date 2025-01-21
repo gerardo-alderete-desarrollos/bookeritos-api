@@ -11,7 +11,7 @@ import { Response } from 'express';
 
 @ApiTags('Editorial')
 @ApiBearerAuth()
-@AuthDecorator([Rol.ADMIN, Rol.TRAINER, Rol.MEMBER])
+@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
 @Controller('editoriales')
 export class EditorialController { 
   constructor(private readonly editorialService: EditorialService) {}

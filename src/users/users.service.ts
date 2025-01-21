@@ -19,10 +19,6 @@ export class UsersService {
         throw new BadRequestException('User already exists')
     }
     
-    if( user ) {
-      createUserDto.userCreateEmail = user.email;
-    }
-
     return await this.userRepository.save(createUserDto);
   }
 
@@ -35,7 +31,7 @@ export class UsersService {
     
     return await this.userRepository.findOne({
       where : {email},
-      select: ['id', 'name', 'email', 'password', 'rol', 'userCreateEmail']
+      select: ['id', 'name', 'email', 'password', 'rol']
     })
   }
 
@@ -43,21 +39,24 @@ export class UsersService {
   async findAll(user: userActiveInterface) {
     return this.userRepository.find({
       //where: {email: user.email},
-      select: ['id', 'name', 'email', 'rol', 'userCreateEmail']
+      select: ['id', 'name', 'email', 'rol']
     })
   }
 
   async findOne(id: number, user: userActiveInterface) {
     return await this.userRepository.findOne({
       where: { id },
-      select: ['id', 'name', 'email', 'rol', 'userCreateEmail']
+      select: ['id', 'name', 'email', 'rol', ]
     })
   }
 
 
   async update(id: number, updateUserDto: UpdateUserDto, user: userActiveInterface) {
     let toUpdate = await this.findOne(id, user);
-    
+    console.log('user', user);
+    console.log('updateUserDto', updateUserDto);
+    console.log('updateUserDto', toUpdate);
+
     if( !toUpdate ){
       throw new NotFoundException({ 
         message: 'No existe usuario con ese ID',

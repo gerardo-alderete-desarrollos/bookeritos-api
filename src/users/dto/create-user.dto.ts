@@ -13,5 +13,5 @@ export class CreateUserDto {
     @IsString()
     rol?: string;
     
-    userCreateEmail?: string;
+    //userCreateEmail?: string;
 }

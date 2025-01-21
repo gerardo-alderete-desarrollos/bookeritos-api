@@ -12,7 +12,7 @@ import { UpdateLibroDto } from './dto/update-libros.dto';
 
 @ApiTags('Libros')
 @ApiBearerAuth()
-@AuthDecorator([Rol.ADMIN, Rol.TRAINER, Rol.MEMBER])
+@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
 @Controller('libros')
 export class LibroController {
   constructor(private readonly libroService: LibroService) {}

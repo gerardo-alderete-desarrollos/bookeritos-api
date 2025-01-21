@@ -19,7 +19,7 @@ export class UsersController {
     summary: 'Creas un Usuario'
   })
   @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.TRAINER])
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
   async create(
     @Body() createUserDto: CreateUserDto,
     @Res() res: Response,
@@ -39,12 +39,11 @@ export class UsersController {
     summary: 'Obtienes todos los usuarios'
   })
   @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.TRAINER])
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
   async findAll(
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface
   ) {
-    
     const data = await this.usersService.findAll(user);
 
     return res.status(HttpStatus.OK).json({
@@ -59,7 +58,7 @@ export class UsersController {
     summary: 'Encuentras un usuario'
   })
   @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.TRAINER])
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
   async findOne( 
     @Param('id') id: string,
     @Res() res: Response,
@@ -69,7 +68,7 @@ export class UsersController {
     const data = await this.usersService.findOne(+id, user);
     return res.status(HttpStatus.OK).json({
       data,
-      message: '',
+      message: 'Usuario cargado correctamente',
       status: 200
     })
   }
@@ -79,7 +78,7 @@ export class UsersController {
     summary: 'Actualizas un usuario'
   })
   @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.TRAINER])
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
   async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -101,7 +100,7 @@ export class UsersController {
     summary: 'Eliminas un usuario'
   })
   @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.TRAINER])
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
   async remove(
     @Param('id') id: string,
     @ActiveUser() user: userActiveInterface,

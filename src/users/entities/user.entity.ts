@@ -24,7 +24,7 @@ export class UserEntity {
     @DeleteDateColumn()
     deleteAt: Date;
 
-    @Column({nullable: true})
-    userCreateEmail: string;
+/*     @Column({nullable: true})
+    userCreateEmail: string; */
 
 }

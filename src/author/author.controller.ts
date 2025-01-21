@@ -11,7 +11,7 @@ import { userActiveInterface } from 'src/common/interfaces/user-active.interface
 
 @ApiTags('Autor')
 @ApiBearerAuth()
-@AuthDecorator([Rol.ADMIN, Rol.TRAINER, Rol.MEMBER])
+@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
 @Controller('autores')
 export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}

@@ -11,7 +11,7 @@ import { UpdateCategoriaDto } from './dto/update-categoria_muscle.dto';
 
 @ApiTags('Categorias')
 @ApiBearerAuth()
-@AuthDecorator([Rol.ADMIN, Rol.TRAINER, Rol.MEMBER])
+@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
 @Controller('categorias')
 export class CategoriaController {
   constructor(private readonly categoriaService: CategoriaService) {}
