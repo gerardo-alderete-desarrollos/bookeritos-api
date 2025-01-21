@@ -28,7 +28,7 @@ export class LibroController {
   async create(
     @Body() CreateLibroDto: CreateLibroDto, 
     @Res() res: Response,
-    @ActiveUser() user: userActiveInterface) {
+    @ActiveUser() user: userActiveInterface) { 
       const data = await this.libroService.create(CreateLibroDto, user);
 
       res.status(HttpStatus.CREATED).json({ 
@@ -62,7 +62,7 @@ export class LibroController {
  
   @Get(':id')
   @ApiOperation({
-    summary: 'Obtiene un Ejercico'
+    summary: 'Obtiene un Libro'
   })
   @ApiResponse({
     status: 200,
@@ -91,10 +91,11 @@ export class LibroController {
   })
   async update(
     @Param('id') id: string, 
-    @Body() UpdateLibroDto: UpdateLibroDto,
+    @Body() updateLibroDto: UpdateLibroDto,
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.libroService.update(+id, UpdateLibroDto, user);
+
+    const data = await this.libroService.update(+id, updateLibroDto, user);
     res.status(HttpStatus.OK).json({
       data,
       message: 'Libro actualizado',
@@ -114,12 +115,13 @@ export class LibroController {
     @Param('id') id: string,
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.libroService.remove(+id, user);
+    
+      const data = await this.libroService.remove(+id, user);
 
-    res.status(HttpStatus.OK).json({
-      data,
-      message: 'Libro eliminado',
-      status: 200
-    })
+      res.status(HttpStatus.OK).json({
+        data,
+        message: 'Libro eliminado',
+        status: 200
+      });
   }
 }

@@ -1,6 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDateString, IsNotEmpty, IsString } from "class-validator";
+import { IsDateString, IsDecimal, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { AuthorEntity } from "src/author/entities/author.entity";
 import { CategoriaEntity } from "src/categoria/entities/categoria.entity";
+import { EditorialEntity } from "src/editorial/entities/editorial.entity";
 
 export class CreateLibroDto {
     @IsString()
@@ -19,6 +21,11 @@ export class CreateLibroDto {
 
     @IsNotEmpty()
     categorias: CategoriaEntity[];
+
+    @IsNotEmpty()
+    editorial: EditorialEntity;
+    @IsNotEmpty()
+    author: AuthorEntity;
 
     @IsNotEmpty()
     paginas: number

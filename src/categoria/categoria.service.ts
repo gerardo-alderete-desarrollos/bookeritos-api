@@ -32,10 +32,17 @@ export class CategoriaService {
     
 
     if( user.rol === Rol.ADMIN) {
-      return await this.categoriaRepository.find();
+      return await this.categoriaRepository.find({
+        relations: {
+          libros: true
+        },
+      })
     }
     
     return await this.categoriaRepository.find({
+      relations: {
+        libros: true
+      },
       where: { userEmail: user.email }
     })
   }
@@ -45,7 +52,6 @@ export class CategoriaService {
     .createQueryBuilder('categorias')
     .where({id})
     .leftJoinAndSelect('categorias.libros', 'libros')
-    //.leftJoinAndSelect('excercices.categoriesMuscle', 'categoriesMuscle')
     .getOne();
 
     if( !categorieMuscle ){

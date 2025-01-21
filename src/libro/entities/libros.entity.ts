@@ -1,6 +1,8 @@
 import { Column, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from "../../users/entities/user.entity";
 import { CategoriaEntity } from "src/categoria/entities/categoria.entity";
+import { AuthorEntity } from "src/author/entities/author.entity";
+import { EditorialEntity } from "src/editorial/entities/editorial.entity";
 
 @Entity('libro')
 export class LibroEntity {
@@ -13,8 +15,7 @@ export class LibroEntity {
     @Column()
     photo: string;
 
-/*     @Column()
-    categories_mucle_id: number; */
+
 
     @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
     createAt: Date;
@@ -26,12 +27,18 @@ export class LibroEntity {
         cascade: true
     })
     @JoinTable()
-    categorias: CategoriaEntity[];
+    categorias: CategoriaEntity[]; 
 
-    @ManyToOne(() => UserEntity)
+    @ManyToOne(() => UserEntity) 
     @JoinColumn({ name: 'userEmail', referencedColumnName: 'email',  })
     user: UserEntity;
   
+    @ManyToOne(() => AuthorEntity, (author) => author.libros)
+    author: AuthorEntity
+
+    @ManyToOne(() => EditorialEntity, (editorial) => editorial.libros)
+    editorial: EditorialEntity;
+
     @Column()
     userEmail: string;
 
@@ -53,10 +60,10 @@ export class LibroEntity {
     @Column()
     edad_recomendada: string;
 
-    @Column()
+    @Column({ name: 'precio_original', type: 'decimal', precision: 10, scale: 2, default: 0.0})
     precio_original: number;
 
-    @Column()
+    @Column({ name: 'precio_final', type: 'decimal', precision: 10, scale: 2, default: 0.0})
     precio_final: number;
 
     @Column()

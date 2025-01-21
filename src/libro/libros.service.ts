@@ -13,7 +13,6 @@ export class LibroService {
   constructor( @InjectRepository(LibroEntity)
                 private libroRepository: Repository<LibroEntity>
               ){
-
   } 
 
   async create(CreateLibroDto: CreateLibroDto, user: userActiveInterface): Promise<any> { 
@@ -34,6 +33,8 @@ export class LibroService {
     item.precio_final = CreateLibroDto.precio_final;
     item.edicion = CreateLibroDto.edicion;
     item.proveedor = CreateLibroDto.proveedor;
+    item.editorial = CreateLibroDto.editorial;
+    item.author = CreateLibroDto.author;
     
     const NEW_LIBRO = await this.libroRepository.save(item);
     
@@ -43,10 +44,21 @@ export class LibroService {
   async findAll(user: userActiveInterface): Promise<LibroEntity[]> {
 
     if( user.rol === Rol.ADMIN) {
-      return await this.libroRepository.find()
+      return await this.libroRepository.find({
+        relations: { 
+          author: true,
+          editorial: true,
+          categorias: true
+        },
+      })
     }
     
     return await this.libroRepository.find({
+      relations: { 
+        author: true,
+        editorial: true,
+        categorias: true
+      },
       where: { userEmail: user.email }
     })
   }
@@ -55,12 +67,20 @@ export class LibroService {
 
 
 
-    const libro = await this.libroRepository
+    const libro = await this.libroRepository.findOne({
+      relations: {
+        categorias: true,
+        author: true,
+        editorial: true,
+      },
+      where: { id } 
+    })
+   /*  const libro = await this.libroRepository
       .createQueryBuilder('libro')
       .where({id})
       .leftJoinAndSelect('libro.categorias', 'categorias')
       .leftJoinAndSelect('categorias.libros', 'libros')
-      .getOne();
+      .getOne(); */
 
       if( !libro ) {
         throw new BadRequestException('Libro no encontrado');
@@ -71,10 +91,10 @@ export class LibroService {
     return libro;
   } 
 
-  async update(id: number, UpdateLibroDto: UpdateLibroDto, user: userActiveInterface):Promise<LibroEntity> {
+  async update(id: number, updateLibroDto: UpdateLibroDto, user: userActiveInterface):Promise<LibroEntity> {
     let toUpdate = await this.findOne(id, user);
     
-    let update = Object.assign(toUpdate, UpdateLibroDto)
+    let update = Object.assign(toUpdate, updateLibroDto)
     const libroUpdated = await this.libroRepository.save(update)
     return libroUpdated;
   }

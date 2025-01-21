@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CategoriaModule } from './categoria/categoria.module';
 import { LibroModule } from './libro/libros.module';
+import { AuthorModule } from './author/author.module';
+import { EditorialModule } from './editorial/editorial.module';
 
 @Module({
   imports: [
@@ -32,10 +34,14 @@ import { LibroModule } from './libro/libros.module';
             : null,
       },
     }),
+    AuthorModule,
+    EditorialModule,
     LibroModule,
     CategoriaModule,
     UsersModule,
-    AuthModule],
+    AuthModule,
+   
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
