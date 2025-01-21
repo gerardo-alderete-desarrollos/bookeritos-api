@@ -32,7 +32,7 @@ export class CategoriaController {
 
     res.status(HttpStatus.CREATED).json({
       data,
-      message: 'Categoria de musculo creada',
+      message: 'Categoria creada',
       status: 201
     })
   }
@@ -97,7 +97,7 @@ export class CategoriaController {
     
     res.status(HttpStatus.OK).json({
       data,
-      message: 'Categoria de musculo actualizada',
+      message: 'Categoria actualizada',
       status: 200
     })
   }
@@ -118,7 +118,7 @@ export class CategoriaController {
 
     res.status(HttpStatus.OK).json({
       data,
-      message: 'Categoria de musculo eliminada',
+      message: 'Categoria eliminada',
       status: 200
     })
   }
