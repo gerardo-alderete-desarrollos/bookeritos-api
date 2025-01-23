@@ -5,6 +5,7 @@ import { userActiveInterface } from '../common/interfaces/user-active.interface'
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
+import * as bcryptjs from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -14,13 +15,16 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto, user: userActiveInterface) {
     const u = await this.findOneByEmail(createUserDto.email);
-
+ 
     if( u ){
         throw new BadRequestException('User already exists')
     }
     
+    createUserDto.password =  await bcryptjs.hash(createUserDto.password,10);
+    
     return await this.userRepository.save(createUserDto);
   }
+
 
   async findOneByEmail(email: string) {
     return await this.userRepository.findOneBy({email})

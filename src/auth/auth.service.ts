@@ -25,7 +25,7 @@ export class AuthService {
         await this.usersService.create({
             name,
             email, 
-            password: await bcryptjs.hash(password,10),
+            password,
             rol
         }, us);
 
