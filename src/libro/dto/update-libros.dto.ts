@@ -18,5 +18,10 @@ export class UpdateLibroDto extends PartialType(CreateLibroDto) {
     updateAt: Date;
     
     @IsNotEmpty()
-    categorias: CategoriaEntity[]
+    categorias: CategoriaEntity[];
+    
+    @IsNotEmpty()
+    sinopsis: string;
+
+    
 }

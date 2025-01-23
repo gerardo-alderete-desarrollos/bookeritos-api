@@ -60,5 +60,8 @@ export class CreateLibroDto {
 
     @IsNotEmpty()
     estatus_renta: string;
+  
+    @IsNotEmpty()
+    sinopsis: string;
 
 }

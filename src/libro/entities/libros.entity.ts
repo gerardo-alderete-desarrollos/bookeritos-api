@@ -78,5 +78,8 @@ export class LibroEntity {
     @Column()
     estatus_renta: string;
 
+    @Column()
+    sinopsis: string;
+
 }
  

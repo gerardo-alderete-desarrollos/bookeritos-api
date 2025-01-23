@@ -35,6 +35,7 @@ export class LibroService {
     item.proveedor = CreateLibroDto.proveedor;
     item.editorial = CreateLibroDto.editorial;
     item.author = CreateLibroDto.author;
+    item.sinopsis = CreateLibroDto.sinopsis;
     
     const NEW_LIBRO = await this.libroRepository.save(item);
     
