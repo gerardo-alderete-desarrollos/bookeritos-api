@@ -78,7 +78,7 @@ export class LibroEntity {
     @Column()
     estatus_renta: string;
 
-    @Column()
+    @Column({ nullable: true})
     sinopsis: string;
 
 }
