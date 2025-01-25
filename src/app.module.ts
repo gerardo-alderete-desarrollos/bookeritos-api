@@ -9,6 +9,7 @@ import { CategoriaModule } from './categoria/categoria.module';
 import { LibroModule } from './libro/libros.module';
 import { AuthorModule } from './author/author.module';
 import { EditorialModule } from './editorial/editorial.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { EditorialModule } from './editorial/editorial.module';
     CategoriaModule,
     UsersModule,
     AuthModule,
+    FilesModule,
    
   ],
   controllers: [AppController],

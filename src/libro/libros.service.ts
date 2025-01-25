@@ -6,12 +6,14 @@ import { userActiveInterface } from '../common/interfaces/user-active.interface'
 import { LibroEntity } from './entities/libros.entity';
 import { CreateLibroDto } from './dto/create-libros.dto';
 import { UpdateLibroDto } from './dto/update-libros.dto';
+import { FilesService } from 'src/files/files.service';
 
 @Injectable()
 export class LibroService {
 
   constructor( @InjectRepository(LibroEntity)
-                private libroRepository: Repository<LibroEntity>
+                private libroRepository: Repository<LibroEntity>,
+                private fileService: FilesService
               ){
   } 
 
@@ -101,7 +103,10 @@ export class LibroService {
   }
 
   async remove(id: number, user: userActiveInterface){
-    await this.findOne(id,user)
+    const libro = await this.findOne(id,user)
+
+    await this.fileService.deleteImage(libro.photo);
+
     return await this.libroRepository.softDelete(id);
   }
 
