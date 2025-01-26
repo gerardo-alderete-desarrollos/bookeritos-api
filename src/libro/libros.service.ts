@@ -46,7 +46,7 @@ export class LibroService {
 
   async findAll(user: userActiveInterface): Promise<LibroEntity[]> {
 
-    if( user.rol === Rol.ADMIN) {
+/*     if( user.rol === Rol.ADMIN) {
       return await this.libroRepository.find({
         relations: { 
           author: true,
@@ -54,7 +54,7 @@ export class LibroService {
           categorias: true
         },
       })
-    }
+    } */
     
     return await this.libroRepository.find({
       relations: { 
@@ -62,7 +62,7 @@ export class LibroService {
         editorial: true,
         categorias: true
       },
-      where: { userEmail: user.email }
+      //where: { userEmail: user.email }
     })
   }
 
@@ -89,7 +89,7 @@ export class LibroService {
         throw new BadRequestException('Libro no encontrado');
       }
 
-      this.validateOwnership(libro, user);
+      //this.validateOwnership(libro, user);
 
     return libro;
   } 
@@ -112,10 +112,10 @@ export class LibroService {
 
 
 
-  private validateOwnership(libro: LibroEntity, user: userActiveInterface){
+/*   private validateOwnership(libro: LibroEntity, user: userActiveInterface){
     if( user.rol !== Rol.ADMIN && libro.userEmail !== user.email ){
       throw new UnauthorizedException('No tienes permiso para acceder a este Libro');
     }
-  }
+  } */
  
 }
