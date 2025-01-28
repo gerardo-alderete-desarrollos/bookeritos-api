@@ -19,8 +19,8 @@ export class HijoService {
     let toUpdate = await this.findOne(id);
     
     let update = Object.assign(toUpdate, updateHijoDto)
-    const libroUpdated = await this.hijoRepository.save(update)
-    return libroUpdated;
+    const hijoUpdated = await this.hijoRepository.save(update)
+    return hijoUpdated;
   }
   
   async findOne(id: number) {

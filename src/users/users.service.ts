@@ -7,6 +7,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import * as bcryptjs from 'bcryptjs';
 import { HijoService } from 'src/hijo/hijo.service';
+import { CreateHijoDto } from 'src/hijo/dto/create-hijo.dto';
+import { UpdateHijoDto } from 'src/hijo/dto/update-hijo.dto';
 
 @Injectable()
 export class UsersService {
@@ -53,6 +55,9 @@ export class UsersService {
   async findOne(id: number, user: userActiveInterface) {
     return await this.userRepository.findOne({
       where: { id },
+      relations: {
+        hijos: true
+      }
     })
   }
 
@@ -71,8 +76,30 @@ export class UsersService {
     }
 
     
+    if( updateUserDto.hijos || updateUserDto.hijos.length > 0 ){
+
+      updateUserDto.hijos.forEach( async(h) => {
+     
+
+        if( !h.id ){
+          const hijo:CreateHijoDto = {
+            edad: h.edad,
+            name: h.name,
+            user: toUpdate
+          }
+
+          await this.hijoService.create(hijo);
+        } else{
+
+          await this.hijoService.update(h.id, h)
+        }
+      })
+
+    }
+
 
     let update = Object.assign(toUpdate, updateUserDto)
+    console.log('usuario por actualizar', update);
     const userUpdated = await this.userRepository.save(update)
     return userUpdated;
   }

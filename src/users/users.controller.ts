@@ -58,7 +58,7 @@ export class UsersController {
     summary: 'Encuentras un usuario'
   })
   @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   async findOne( 
     @Param('id') id: string,
     @Res() res: Response,
@@ -78,7 +78,7 @@ export class UsersController {
     summary: 'Actualizas un usuario'
   })
   @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
