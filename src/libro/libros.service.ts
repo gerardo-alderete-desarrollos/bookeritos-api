@@ -68,15 +68,14 @@ export class LibroService {
 
   async findOne(id: number, user: userActiveInterface):Promise<LibroEntity> {
 
-
-
     const libro = await this.libroRepository.findOne({
       relations: {
         categorias: true,
         author: true,
         editorial: true,
       },
-      where: { id } 
+      where: { id },
+      order: { name: 'ASC'}
     })
    /*  const libro = await this.libroRepository
       .createQueryBuilder('libro')

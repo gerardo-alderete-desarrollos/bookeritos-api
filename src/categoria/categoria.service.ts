@@ -31,19 +31,13 @@ export class CategoriaService {
   async findAll(user: userActiveInterface):Promise<CategoriaEntity[]> {
     
 
-    if( user.rol === Rol.ADMIN) {
-      return await this.categoriaRepository.find({
-        relations: {
-          libros: true
-        },
-      })
-    }
+
     
     return await this.categoriaRepository.find({
       relations: {
         libros: true
       },
-      where: { userEmail: user.email }
+      order: { name: 'asc'}
     })
   }
 

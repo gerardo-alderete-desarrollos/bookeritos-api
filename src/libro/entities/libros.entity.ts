@@ -37,7 +37,7 @@ export class LibroEntity {
     author: AuthorEntity
 
     @ManyToOne(() => EditorialEntity, (editorial) => editorial.libros)
-    editorial: EditorialEntity;
+    editorial: EditorialEntity; 
 
     @Column()
     userEmail: string;

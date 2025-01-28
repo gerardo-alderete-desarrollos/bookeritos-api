@@ -14,7 +14,7 @@ export class AuthService {
     ){
 
     }
-    async register({name, email, password, rol}: RegisterDto,  us: userActiveInterface){
+    async register({name, email, password, rol, }: RegisterDto,  us: userActiveInterface){
         console.log('email', email)
         const user = await this.usersService.findOneByEmail(email);
 
@@ -26,7 +26,9 @@ export class AuthService {
             name,
             email, 
             password,
-            rol
+            rol,
+            hijos:[],
+            edad: null
         }, us);
 
         return {

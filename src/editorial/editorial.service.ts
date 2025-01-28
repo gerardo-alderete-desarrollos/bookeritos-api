@@ -28,7 +28,8 @@ export class EditorialService {
     return await this.editorialRepository.find({
       relations: { 
         libros: true
-      }
+      },
+      order: { name: 'asc' }
     })
   }
 

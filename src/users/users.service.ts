@@ -6,12 +6,15 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import * as bcryptjs from 'bcryptjs';
+import { HijoService } from 'src/hijo/hijo.service';
 
 @Injectable()
 export class UsersService {
 
   @InjectRepository(UserEntity)
   private userRepository: Repository<UserEntity>
+
+  constructor(private hijoService: HijoService){}
 
   async create(createUserDto: CreateUserDto, user: userActiveInterface) {
     const u = await this.findOneByEmail(createUserDto.email);
@@ -50,7 +53,6 @@ export class UsersService {
   async findOne(id: number, user: userActiveInterface) {
     return await this.userRepository.findOne({
       where: { id },
-      select: ['id', 'name', 'email', 'rol', ]
     })
   }
 
@@ -67,6 +69,8 @@ export class UsersService {
         status: 400
       })
     }
+
+    
 
     let update = Object.assign(toUpdate, updateUserDto)
     const userUpdated = await this.userRepository.save(update)

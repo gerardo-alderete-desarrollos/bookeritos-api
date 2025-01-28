@@ -10,6 +10,7 @@ import { LibroModule } from './libro/libros.module';
 import { AuthorModule } from './author/author.module';
 import { EditorialModule } from './editorial/editorial.module';
 import { FilesModule } from './files/files.module';
+import { HijoModule } from './hijo/hijo.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { FilesModule } from './files/files.module';
     UsersModule,
     AuthModule,
     FilesModule,
+    HijoModule,
    
   ],
   controllers: [AppController],

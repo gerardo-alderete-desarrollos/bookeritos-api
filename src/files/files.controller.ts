@@ -15,11 +15,13 @@ export class FilesController {
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({maxSize: 1024 * 1024 * 4}),
-          new FileTypeValidator({ fileType: '.(png|jpeg|jpg)'})
+          new FileTypeValidator({ fileType: '.(png|jpeg|jpg|pdf)'})
         ]
       }),
-    ) file: Express.Multer.File){
-    const data = await  this.filesService.uploadFile(file);
+    ) file: Express.Multer.File,
+    @Body() body
+   ){
+    const data = await  this.filesService.uploadFile(file,body.folder);
 
     res.status(HttpStatus.CREATED).json({ 
       data: data,
