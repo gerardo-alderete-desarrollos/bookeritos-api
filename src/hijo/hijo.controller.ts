@@ -10,7 +10,7 @@ export class HijoController {
   @Post()
   create(@Body() createHijoDto: CreateHijoDto) {
     return this.hijoService.create(createHijoDto);
-  }
+  } 
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateHijoDto: UpdateHijoDto) {

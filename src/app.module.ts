@@ -11,6 +11,7 @@ import { AuthorModule } from './author/author.module';
 import { EditorialModule } from './editorial/editorial.module';
 import { FilesModule } from './files/files.module';
 import { HijoModule } from './hijo/hijo.module';
+import { IdiomasModule } from './idiomas/idiomas.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { HijoModule } from './hijo/hijo.module';
     AuthModule,
     FilesModule,
     HijoModule,
+    IdiomasModule,
    
   ],
   controllers: [AppController],

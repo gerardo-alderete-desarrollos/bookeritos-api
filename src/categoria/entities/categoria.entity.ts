@@ -22,6 +22,9 @@ export class CategoriaEntity {
     @ManyToMany(() => LibroEntity, (libros) => libros.categorias)
     libros: LibroEntity[];
 
+    @ManyToMany(() => UserEntity, (usuarios) => usuarios.generosInteres)
+    usuarios: UserEntity[];
+
   /*   @ManyToOne(() => UserEntity)
     @JoinColumn({ name: 'userEmail', referencedColumnName: 'email',  })
     user: UserEntity; */

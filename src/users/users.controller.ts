@@ -41,7 +41,7 @@ export class UsersController {
   @ApiBearerAuth()
   @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
   async findAll(
-    @Res() res: Response,
+    @Res() res: Response, 
     @ActiveUser() user: userActiveInterface
   ) {
     const data = await this.usersService.findAll(user);

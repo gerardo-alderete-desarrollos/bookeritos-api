@@ -27,7 +27,7 @@ export class LibroEntity {
         cascade: true
     })
     @JoinTable()
-    categorias: CategoriaEntity[]; 
+    categorias: CategoriaEntity[];  
 
     @ManyToOne(() => UserEntity) 
     @JoinColumn({ name: 'userEmail', referencedColumnName: 'email',  })

@@ -36,7 +36,6 @@ export class UsersService {
   }
 
   async findByEmailWithPassword(email: string) {
-    console.log(email);
     
     return await this.userRepository.findOne({
       where : {email},
@@ -56,7 +55,9 @@ export class UsersService {
     return await this.userRepository.findOne({
       where: { id },
       relations: {
-        hijos: true
+        hijos: true,
+        generosInteres: true,
+        idiomasInteres: true,
       }
     })
   }
@@ -64,9 +65,6 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto, user: userActiveInterface) {
     let toUpdate = await this.findOne(id, user);
-    console.log('user', user);
-    console.log('updateUserDto', updateUserDto);
-    console.log('updateUserDto', toUpdate);
 
     if( !toUpdate ){
       throw new NotFoundException({ 
@@ -97,9 +95,10 @@ export class UsersService {
 
     }
 
+    //valida si el usuario completo su perfil
+    const updated = this.validateProfileComplete(updateUserDto); 
 
-    let update = Object.assign(toUpdate, updateUserDto)
-    console.log('usuario por actualizar', update);
+    let update = Object.assign(toUpdate, updated)
     const userUpdated = await this.userRepository.save(update)
     return userUpdated;
   }
@@ -114,5 +113,31 @@ export class UsersService {
       })
     }
     return this.userRepository.softDelete(id);
+  }
+
+  validateProfileComplete(updateUserDto: UpdateUserDto){
+      if((updateUserDto.name && updateUserDto.name != '') &&
+        (updateUserDto.email && updateUserDto.email != '')&&
+        (updateUserDto.rol && updateUserDto.rol != '')&&
+        (updateUserDto.hijos && updateUserDto.hijos.length > 0)&&
+        (updateUserDto.direccion && updateUserDto.direccion != '')&&
+        (updateUserDto.referencias && updateUserDto.referencias != '')&&
+        (updateUserDto.telefono && updateUserDto.telefono != '')&&
+        (updateUserDto.ine && updateUserDto.ine != '')&&
+        (updateUserDto.comprobanteDomicilio && updateUserDto.comprobanteDomicilio != '')&&
+        (updateUserDto.cantidadHijos )&&
+        (updateUserDto.nivelLectorHijos && updateUserDto.nivelLectorHijos != '')&&
+        (updateUserDto.edad )&&
+        (updateUserDto.preguntasComentarios && updateUserDto.preguntasComentarios!= '')
+        
+    ){
+      updateUserDto.isProfileComplete = true;
+    } else{
+      updateUserDto.isProfileComplete = false;
+
+    }
+    console.log(updateUserDto);
+    
+    return updateUserDto;
   }
 }

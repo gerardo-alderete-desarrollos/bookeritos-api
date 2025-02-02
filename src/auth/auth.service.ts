@@ -15,7 +15,6 @@ export class AuthService {
 
     }
     async register({name, email, password, rol, }: RegisterDto,  us: userActiveInterface){
-        console.log('email', email)
         const user = await this.usersService.findOneByEmail(email);
 
         if( user ){
@@ -28,7 +27,7 @@ export class AuthService {
             password,
             rol,
             hijos:[],
-            edad: null
+            edad: null,
         }, us);
 
         return {
@@ -39,7 +38,6 @@ export class AuthService {
     }
 
     async login({email, password}: LoginDto) {
-        console.log('USUARIO', email);
         const user = await this.usersService.findByEmailWithPassword(email);
         if( !user ){
             throw new UnauthorizedException('email is wrong')

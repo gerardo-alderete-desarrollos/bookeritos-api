@@ -1,7 +1,9 @@
 
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { AfterUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Rol } from '../../common/enums/rol.enum';
 import { HijoEntity } from 'src/hijo/entities/hijo.entity';
+import { IdiomaEntity } from 'src/idiomas/entities/idioma.entity';
+import { CategoriaEntity } from 'src/categoria/entities/categoria.entity';
 
 @Entity('usuarios')
 export class UserEntity {
@@ -27,6 +29,18 @@ export class UserEntity {
     @OneToMany(() => HijoEntity, (hijo) => hijo.user)
     hijos: HijoEntity[];
 
+    @ManyToMany(() => IdiomaEntity, (idiomas) => idiomas.usuarios, {
+        cascade: true
+    })
+    @JoinTable()
+    idiomasInteres: IdiomaEntity[]; 
+    
+    @ManyToMany(() => CategoriaEntity, (category) => category.usuarios, {
+        cascade: true
+    }) 
+    @JoinTable()
+    generosInteres: CategoriaEntity[]; 
+
     @Column({ nullable: true})
     direccion: string;
 
@@ -48,11 +62,11 @@ export class UserEntity {
     @Column({ nullable: true})
     nivelLectorHijos: string;
 
-    @Column({ nullable: true})
+/*     @Column({ nullable: true})
     idiomaInteresHijos: string;
 
     @Column({ nullable: true})
-    generoInteresHijos: string;
+    generoInteresHijos: string; */
 
     @Column({ nullable: true})
     preguntasComentarios: string;
@@ -65,5 +79,9 @@ export class UserEntity {
 
     @UpdateDateColumn()
     updateAt: Date;
+
+    @Column({ default: false, nullable: true})
+    isProfileComplete: boolean;
+
 
 }

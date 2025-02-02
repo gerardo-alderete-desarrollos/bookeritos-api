@@ -1,6 +1,8 @@
 import { Transform } from "class-transformer";
-import { IsEmail, IsNumber, IsString, MinLength } from "class-validator";
+import { IsBoolean, IsEmail, IsNumber, IsString, MinLength } from "class-validator";
+import { CategoriaEntity } from "src/categoria/entities/categoria.entity";
 import { HijoEntity } from "src/hijo/entities/hijo.entity";
+import { IdiomaEntity } from "src/idiomas/entities/idioma.entity";
 
 export class CreateUserDto {
     @IsEmail()
@@ -41,12 +43,19 @@ export class CreateUserDto {
     @IsString()
     nivelLectorHijos?: string;
 
-    @IsString()
+/*     @IsString()
     idiomaInteresHijos?: string;
 
     @IsString()
-    generoInteresHijos?: string;
+    generoInteresHijos?: string; */
+
+    idiomasInteres?: IdiomaEntity[];
+
+    generosInteres?: CategoriaEntity[];
 
     @IsString()
     preguntasComentarios?: string;
+
+    @IsBoolean()
+    isProfileComplete?: boolean;
 }

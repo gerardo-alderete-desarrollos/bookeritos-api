@@ -4,7 +4,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 @Entity('hijos')
 export class HijoEntity {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number; 
 
     @Column()
     name: string;
