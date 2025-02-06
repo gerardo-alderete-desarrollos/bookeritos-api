@@ -38,6 +38,7 @@ export class LibroService {
     item.editorial = CreateLibroDto.editorial;
     item.author = CreateLibroDto.author;
     item.sinopsis = CreateLibroDto.sinopsis;
+    item.idioma = CreateLibroDto.idioma;
     
     const NEW_LIBRO = await this.libroRepository.save(item);
     
@@ -60,7 +61,8 @@ export class LibroService {
       relations: { 
         author: true,
         editorial: true,
-        categorias: true
+        categorias: true,
+        idioma: true
       },
       //where: { userEmail: user.email }
     })
@@ -73,6 +75,7 @@ export class LibroService {
         categorias: true,
         author: true,
         editorial: true,
+        idioma: true,
       },
       where: { id },
       order: { name: 'ASC'}

@@ -1,8 +1,10 @@
+import { I } from "@faker-js/faker/dist/airline-BLb3y-7w";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDateString, IsDecimal, IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { AuthorEntity } from "src/author/entities/author.entity";
 import { CategoriaEntity } from "src/categoria/entities/categoria.entity";
 import { EditorialEntity } from "src/editorial/entities/editorial.entity";
+import { IdiomaEntity } from "src/idiomas/entities/idioma.entity";
 
 export class CreateLibroDto {
     @IsString()
@@ -37,7 +39,7 @@ export class CreateLibroDto {
     edicion: number;
 
     @IsNotEmpty()
-    idioma: string;
+    idioma: IdiomaEntity
 
     @IsNotEmpty()
     edad_recomendada: string;

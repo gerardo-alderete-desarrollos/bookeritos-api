@@ -33,7 +33,7 @@ export class UserEntity {
         cascade: true
     })
     @JoinTable()
-    idiomasInteres: IdiomaEntity[]; 
+    idiomasInteres: IdiomaEntity[];  
     
     @ManyToMany(() => CategoriaEntity, (category) => category.usuarios, {
         cascade: true

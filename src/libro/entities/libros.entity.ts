@@ -3,6 +3,7 @@ import { UserEntity } from "../../users/entities/user.entity";
 import { CategoriaEntity } from "src/categoria/entities/categoria.entity";
 import { AuthorEntity } from "src/author/entities/author.entity";
 import { EditorialEntity } from "src/editorial/entities/editorial.entity";
+import { IdiomaEntity } from "src/idiomas/entities/idioma.entity";
 
 @Entity('libro')
 export class LibroEntity {
@@ -32,6 +33,9 @@ export class LibroEntity {
     @ManyToOne(() => UserEntity) 
     @JoinColumn({ name: 'userEmail', referencedColumnName: 'email',  })
     user: UserEntity;
+
+    @ManyToOne(() => IdiomaEntity, (idioma) => idioma.libros)
+    idioma: IdiomaEntity
   
     @ManyToOne(() => AuthorEntity, (author) => author.libros)
     author: AuthorEntity
@@ -53,9 +57,6 @@ export class LibroEntity {
 
     @Column()
     edicion: number;
-
-    @Column()
-    idioma: string;
 
     @Column()
     edad_recomendada: string;
