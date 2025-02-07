@@ -46,8 +46,11 @@ export class UsersService {
 
   async findAll(user: userActiveInterface) {
     return this.userRepository.find({
-      //where: {email: user.email},
-      select: ['id', 'name', 'email', 'rol']
+      relations: {
+        hijos: true,
+        generosInteres: true,
+        idiomasInteres: true,
+      }
     })
   }
 
