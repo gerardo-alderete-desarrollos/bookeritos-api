@@ -77,7 +77,7 @@ export class UsersService {
     }
 
     
-    if( updateUserDto.hijos || updateUserDto.hijos.length > 0 ){
+    if( updateUserDto?.hijos || updateUserDto.hijos?.length > 0 ){
 
       updateUserDto.hijos.forEach( async(h) => {
      
