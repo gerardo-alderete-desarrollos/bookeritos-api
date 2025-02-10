@@ -12,6 +12,8 @@ import { EditorialModule } from './editorial/editorial.module';
 import { FilesModule } from './files/files.module';
 import { HijoModule } from './hijo/hijo.module';
 import { IdiomasModule } from './idiomas/idiomas.module';
+import { SuscripcionesModule } from './suscripciones/suscripciones.module';
+import { UsuarioSuscripcionesModule } from './usuario-suscripciones/usuario-suscripciones.module';
 
 @Module({
   imports: [
@@ -46,6 +48,8 @@ import { IdiomasModule } from './idiomas/idiomas.module';
     FilesModule,
     HijoModule,
     IdiomasModule,
+    SuscripcionesModule,
+    UsuarioSuscripcionesModule,
    
   ],
   controllers: [AppController],

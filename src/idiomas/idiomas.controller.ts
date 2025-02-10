@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus } from '@nestjs/common';
 import { IdiomasService } from './idiomas.service';
-import { CreateIdiomaDto } from './dto/create-idioma.dto';
+import { CreateIdiomaDto } from './dto/create-idioma.dto'; 
 import { UpdateIdiomaDto } from './dto/update-idioma.dto';
 import { Response } from 'express';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';

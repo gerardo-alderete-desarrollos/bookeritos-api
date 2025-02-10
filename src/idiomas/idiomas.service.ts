@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { IdiomaEntity } from './entities/idioma.entity';
 
-@Injectable()
+@Injectable() 
 export class IdiomasService {
 
   @InjectRepository(IdiomaEntity)

@@ -4,6 +4,7 @@ import { Rol } from '../../common/enums/rol.enum';
 import { HijoEntity } from 'src/hijo/entities/hijo.entity';
 import { IdiomaEntity } from 'src/idiomas/entities/idioma.entity';
 import { CategoriaEntity } from 'src/categoria/entities/categoria.entity';
+import { SuscripcionEntity } from 'src/suscripciones/entities/suscripcion.entity';
 
 @Entity('usuarios')
 export class UserEntity {
@@ -40,6 +41,20 @@ export class UserEntity {
     }) 
     @JoinTable()
     generosInteres: CategoriaEntity[]; 
+
+    @ManyToMany(() => SuscripcionEntity, suscripcion => suscripcion.users)
+    @JoinTable({
+        name: 'usuarios_suscripcion',
+        joinColumn: {
+        name: 'userId',
+        referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+        name: 'suscripcionId',
+        referencedColumnName: 'id',
+        },
+    })
+    suscripciones: SuscripcionEntity[]
 
     @Column({ nullable: true})
     direccion: string;

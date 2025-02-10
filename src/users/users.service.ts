@@ -50,6 +50,7 @@ export class UsersService {
         hijos: true,
         generosInteres: true,
         idiomasInteres: true,
+        suscripciones: true
       }
     })
   }
@@ -61,6 +62,7 @@ export class UsersService {
         hijos: true,
         generosInteres: true,
         idiomasInteres: true,
+        suscripciones: true
       }
     })
   }
