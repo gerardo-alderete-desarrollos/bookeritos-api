@@ -7,6 +7,7 @@ import { CreateUsuarioSuscripcionesDto } from './dto/create-usuario-suscripcione
 import { userActiveInterface } from 'src/common/interfaces/user-active.interface';
 import { ActiveUser } from 'src/common/decorators/active-user.decorator';
 import { Response } from 'express';
+import { Estatus } from 'src/common/enums/estatus.enum';
 
 @Controller('usuario-suscripciones')
 export class UsuarioSuscripcionesController {
@@ -55,6 +56,44 @@ export class UsuarioSuscripcionesController {
           status: 200
         })
   }
+
+  @ApiOperation({
+    summary: 'Obtiene todas la suscripciones'
+  })
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+  @Get()
+  async findUsersSuscriptions(@Res() res: Response) {
+    const data = await  this.usuarioSuscripcionesService.findHistorialSuscription(); 
+       return res.status(HttpStatus.OK).json({
+          data,
+          message: `Se obtuvieron ${data.length} Suscripciones`,
+          status: 200
+        })
+  }
+
+  @ApiOperation({
+    summary: 'Obtiene todas la suscripciones'
+  })
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+  @Patch('/estatus/:id')
+  async changeStatus(
+    @Param('id') id: number,
+    @Body() body: { estatus: Estatus},
+    @Res() res: Response) {
+      console.log('id', id);
+      console.log('body', body);
+      
+    const data = await this.usuarioSuscripcionesService.changeStatusSuscription(id, body.estatus);
+    return res.status(HttpStatus.OK).json({
+      data,
+      message: `Se actualizo el estatus correctamente`,
+      status: 200
+    })
+  }
+
+
  /*  @Post()
   create(@Body() createUsuarioSuscripcioneDto: CreateUsuarioSuscripcioneDto) {
     return this.usuarioSuscripcionesService.create(createUsuarioSuscripcioneDto);

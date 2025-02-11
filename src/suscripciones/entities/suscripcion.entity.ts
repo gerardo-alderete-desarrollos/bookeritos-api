@@ -1,5 +1,6 @@
 import { UserEntity } from "src/users/entities/user.entity";
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { UsuarioSuscripcionEntity } from "src/usuario-suscripciones/entities/usuario-suscripcione.entity";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('suscripcion')
 export class SuscripcionEntity {
@@ -15,7 +16,10 @@ export class SuscripcionEntity {
     @Column()
     descripcion: string;
 
-    @ManyToMany(() => UserEntity, user => user.suscripciones)
-    users: UserEntity[]
+ /*    @ManyToMany(() => UserEntity, user => user.suscripciones)
+    users: UserEntity[] */
+
+    @OneToMany(type => UsuarioSuscripcionEntity, usersSuscription => usersSuscription.user)
+    users: UsuarioSuscripcionEntity[];
 }
   

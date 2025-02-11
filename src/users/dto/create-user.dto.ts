@@ -43,12 +43,6 @@ export class CreateUserDto {
     @IsString()
     nivelLectorHijos?: string;
 
-/*     @IsString()
-    idiomaInteresHijos?: string;
-
-    @IsString()
-    generoInteresHijos?: string; */
-
     idiomasInteres?: IdiomaEntity[];
 
     generosInteres?: CategoriaEntity[];
@@ -58,4 +52,6 @@ export class CreateUserDto {
 
     @IsBoolean()
     isProfileComplete?: boolean;
+
+    
 }

@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UpdateUsuarioSuscripcioneDto } from './dto/update-usuario-suscripcione.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsuarioSuscripcionEntity } from './entities/usuario-suscripcione.entity';
 import { Repository } from 'typeorm';
 import { CreateUsuarioSuscripcionesDto } from './dto/create-usuario-suscripcione.dto';
+import { Estatus } from 'src/common/enums/estatus.enum';
+import { es } from '@faker-js/faker/.';
 
 @Injectable()
 export class UsuarioSuscripcionesService {
@@ -13,7 +15,15 @@ export class UsuarioSuscripcionesService {
 
   async findSuscriptionsByUser(userId: number): Promise<UsuarioSuscripcionEntity[]> {
     return await this.usuarioSuscripcionRepository.find({
-      where: { userId }, 
+      //where: { userId }, 
+    })
+  }
+  async findHistorialSuscription(): Promise<UsuarioSuscripcionEntity[]> {
+    return await this.usuarioSuscripcionRepository.find({
+      relations:{
+        user: true,
+        suscription: true
+      }
     })
   }
 
@@ -23,6 +33,24 @@ async createUsuarioSuscripcion(createUsuarioSuscripcioneDto: CreateUsuarioSuscri
     const usuarioSuscripcion = await this.usuarioSuscripcionRepository.save(createUsuarioSuscripcioneDto)
     return usuarioSuscripcion;
 }
+
+async findOne(id: number) {
+  const usuarioSuscripcion: UsuarioSuscripcionEntity = await this.usuarioSuscripcionRepository.findOne({
+    where: { id }
+  });
+  return usuarioSuscripcion;
+}
+
+async changeStatusSuscription(id: number , estatus: Estatus){
+  const usuarioSuscripcion: UsuarioSuscripcionEntity = await this.findOne(id);
+
+  if( !usuarioSuscripcion ){
+    throw new BadRequestException('No existe una suscripcion con el id ' + id);
+  }
+
+  usuarioSuscripcion.estatus = estatus;
+  this.usuarioSuscripcionRepository.save(usuarioSuscripcion);
+}
  /*  create(createUsuarioSuscripcioneDto: CreateUsuarioSuscripcioneDto) {
     return 'This action adds a new usuarioSuscripcione';
   }
@@ -31,9 +59,7 @@ async createUsuarioSuscripcion(createUsuarioSuscripcioneDto: CreateUsuarioSuscri
     return `This action returns all usuarioSuscripciones`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} usuarioSuscripcione`;
-  }
+  
 
   update(id: number, updateUsuarioSuscripcioneDto: UpdateUsuarioSuscripcioneDto) {
     return `This action updates a #${id} usuarioSuscripcione`;

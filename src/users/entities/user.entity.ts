@@ -5,6 +5,7 @@ import { HijoEntity } from 'src/hijo/entities/hijo.entity';
 import { IdiomaEntity } from 'src/idiomas/entities/idioma.entity';
 import { CategoriaEntity } from 'src/categoria/entities/categoria.entity';
 import { SuscripcionEntity } from 'src/suscripciones/entities/suscripcion.entity';
+import { UsuarioSuscripcionEntity } from 'src/usuario-suscripciones/entities/usuario-suscripcione.entity';
 
 @Entity('usuarios')
 export class UserEntity {
@@ -42,7 +43,7 @@ export class UserEntity {
     @JoinTable()
     generosInteres: CategoriaEntity[]; 
 
-    @ManyToMany(() => SuscripcionEntity, suscripcion => suscripcion.users)
+    /* @ManyToMany(() => SuscripcionEntity, suscripcion => suscripcion.users)
     @JoinTable({
         name: 'usuarios_suscripcion',
         joinColumn: {
@@ -54,7 +55,10 @@ export class UserEntity {
         referencedColumnName: 'id',
         },
     })
-    suscripciones: SuscripcionEntity[]
+    suscripciones: SuscripcionEntity[] */
+
+    @OneToMany(type => UsuarioSuscripcionEntity, userSuscription => userSuscription.user)
+    suscripciones: UsuarioSuscripcionEntity[];
 
     @Column({ nullable: true})
     direccion: string;
