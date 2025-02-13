@@ -48,13 +48,13 @@ export class UsuarioSuscripcionesController {
   @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @Get(':id')
   async findSuscriptionsByUser(@Res() res: Response,@Param('id') id: string) {
-    const data = await  this.usuarioSuscripcionesService.findSuscriptionsByUser(+id); 
+    const data = await  this.usuarioSuscripcionesService.findOne(+id); 
 
        return res.status(HttpStatus.OK).json({
           data,
-          message: `Se obtuvieron ${data.length} Suscripciones para el usuario ${id}`,
+          message: `Se obtuno la suscripcion`,
           status: 200
-        })
+        }) 
   }
 
   @ApiOperation({

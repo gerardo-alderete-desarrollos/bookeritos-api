@@ -22,23 +22,10 @@ export class LibroService {
     item.name = CreateLibroDto.name;
     item.userEmail = user.email;
     item.photo = CreateLibroDto.photo;
-    item.updateAt = CreateLibroDto.updateAt;
     item.categorias = CreateLibroDto.categorias;
     item.edad_recomendada = CreateLibroDto.edad_recomendada;
-    item.paginas = CreateLibroDto.paginas;
-    item.estatus_renta = CreateLibroDto.estatus_renta;
-    item.year_publicacion = CreateLibroDto.year_publicacion;
-    item.idioma = CreateLibroDto.idioma;
-    item.llego_compra = CreateLibroDto.llego_compra;
-    item.fecha_compra = CreateLibroDto.fecha_compra;
-    item.precio_original = CreateLibroDto.precio_original;
-    item.precio_final = CreateLibroDto.precio_final;
-    item.edicion = CreateLibroDto.edicion;
-    item.proveedor = CreateLibroDto.proveedor;
-    item.editorial = CreateLibroDto.editorial;
     item.author = CreateLibroDto.author;
     item.sinopsis = CreateLibroDto.sinopsis;
-    item.idioma = CreateLibroDto.idioma;
     
     const NEW_LIBRO = await this.libroRepository.save(item);
     
@@ -60,9 +47,7 @@ export class LibroService {
     return await this.libroRepository.find({
       relations: { 
         author: true,
-        editorial: true,
         categorias: true,
-        idioma: true
       },
       //where: { userEmail: user.email }
     })
@@ -74,8 +59,6 @@ export class LibroService {
       relations: {
         categorias: true,
         author: true,
-        editorial: true,
-        idioma: true,
       },
       where: { id },
       order: { name: 'ASC'}

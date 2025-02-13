@@ -1,3 +1,4 @@
+import { InventarioLibroEntity } from "src/inventario-libros/entities/inventario-libro.entity"
 import { LibroEntity } from "src/libro/entities/libros.entity"
 import { Column, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
@@ -12,8 +13,8 @@ export class EditorialEntity {
     @Column()
     photo: string
 
-    @OneToMany(() => LibroEntity, (libro) => libro.editorial)
-    libros: LibroEntity[];
+    @OneToMany(() => InventarioLibroEntity, (inventario) => inventario.editorial)
+    libros: InventarioLibroEntity[];
 
     @DeleteDateColumn()
     deleteAt: Date;

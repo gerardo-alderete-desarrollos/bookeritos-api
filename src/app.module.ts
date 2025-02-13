@@ -14,6 +14,7 @@ import { HijoModule } from './hijo/hijo.module';
 import { IdiomasModule } from './idiomas/idiomas.module';
 import { SuscripcionesModule } from './suscripciones/suscripciones.module';
 import { UsuarioSuscripcionesModule } from './usuario-suscripciones/usuario-suscripciones.module';
+import { InventarioLibrosModule } from './inventario-libros/inventario-libros.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { UsuarioSuscripcionesModule } from './usuario-suscripciones/usuario-susc
     IdiomasModule,
     SuscripcionesModule,
     UsuarioSuscripcionesModule,
+    InventarioLibrosModule,
    
   ],
   controllers: [AppController],

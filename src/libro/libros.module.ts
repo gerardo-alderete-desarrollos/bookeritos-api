@@ -11,7 +11,7 @@ import { FilesModule } from 'src/files/files.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([LibroEntity]),
+    TypeOrmModule.forFeature([LibroEntity]), 
     AuthModule,
     FilesModule,
   ],

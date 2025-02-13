@@ -5,13 +5,15 @@ import { UsuarioSuscripcionEntity } from './entities/usuario-suscripcione.entity
 import { Repository } from 'typeorm';
 import { CreateUsuarioSuscripcionesDto } from './dto/create-usuario-suscripcione.dto';
 import { Estatus } from 'src/common/enums/estatus.enum';
-import { es } from '@faker-js/faker/.';
+import { UsersService } from 'src/users/users.service';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class UsuarioSuscripcionesService {
    constructor(
           @InjectRepository(UsuarioSuscripcionEntity)
-          private usuarioSuscripcionRepository: Repository<UsuarioSuscripcionEntity>){}
+          private usuarioSuscripcionRepository: Repository<UsuarioSuscripcionEntity>,
+      ){}
 
   async findSuscriptionsByUser(userId: number): Promise<UsuarioSuscripcionEntity[]> {
     return await this.usuarioSuscripcionRepository.find({
@@ -35,10 +37,13 @@ async createUsuarioSuscripcion(createUsuarioSuscripcioneDto: CreateUsuarioSuscri
 }
 
 async findOne(id: number) {
-  const usuarioSuscripcion: UsuarioSuscripcionEntity = await this.usuarioSuscripcionRepository.findOne({
-    where: { id }
-  });
-  return usuarioSuscripcion;
+  const usuarioSuscripcion: UsuarioSuscripcionEntity[] = await this.usuarioSuscripcionRepository.find({
+    relations:{
+      user: true,
+      suscription: true,
+    }});
+    console.log('findOne ---------', usuarioSuscripcion)
+  return usuarioSuscripcion.find( us=> us.id = id);
 }
 
 async changeStatusSuscription(id: number , estatus: Estatus){
