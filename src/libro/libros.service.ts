@@ -7,12 +7,16 @@ import { LibroEntity } from './entities/libros.entity';
 import { CreateLibroDto } from './dto/create-libros.dto';
 import { UpdateLibroDto } from './dto/update-libros.dto';
 import { FilesService } from 'src/files/files.service';
+import { CreateInventarioLibroDto } from 'src/inventario-libros/dto/create-inventario-libro.dto';
+import { InventarioLibroEntity } from 'src/inventario-libros/entities/inventario-libro.entity';
+import { InventarioLibrosService } from 'src/inventario-libros/inventario-libros.service';
 
 @Injectable()
 export class LibroService {
 
   constructor( @InjectRepository(LibroEntity)
                 private libroRepository: Repository<LibroEntity>,
+                private inverntarioService:InventarioLibrosService,
                 private fileService: FilesService
               ){
   } 
@@ -33,23 +37,28 @@ export class LibroService {
   }
 
   async findAll(user: userActiveInterface): Promise<LibroEntity[]> {
-
-/*     if( user.rol === Rol.ADMIN) {
-      return await this.libroRepository.find({
-        relations: { 
-          author: true,
-          editorial: true,
-          categorias: true
-        },
-      })
-    } */
-    
     return await this.libroRepository.find({
       relations: { 
         author: true,
         categorias: true,
+        inventario: true,
       },
       //where: { userEmail: user.email }
+    })
+  }
+
+  async findAllDisponibles(user: userActiveInterface): Promise<LibroEntity[]> {
+    return await this.libroRepository.find({
+      relations: { 
+        author: true,
+        categorias: true,
+        inventario: true,
+      },
+      where: { 
+        inventario:{
+          disponible: true
+        }
+       }
     })
   }
 
@@ -59,6 +68,7 @@ export class LibroService {
       relations: {
         categorias: true,
         author: true,
+        inventario: true
       },
       where: { id },
       order: { name: 'ASC'}
@@ -86,6 +96,19 @@ export class LibroService {
     const libroUpdated = await this.libroRepository.save(update)
     return libroUpdated;
   }
+  async addInventario(id: number, createInventario: CreateInventarioLibroDto, user: userActiveInterface):Promise<LibroEntity> {
+    let toUpdate = await this.findOne(id, user);
+
+    const inventario = await this.inverntarioService.create(createInventario);
+    
+    if(inventario){
+      toUpdate?.inventario?.push(inventario);
+      console.log('Libro agregado al inventario', toUpdate);
+      const libroUpdated = await this.libroRepository.save(toUpdate)
+      return libroUpdated;
+    }
+    return ;
+  }
 
   async remove(id: number, user: userActiveInterface){
     const libro = await this.findOne(id,user)
@@ -94,13 +117,4 @@ export class LibroService {
 
     return await this.libroRepository.softDelete(id);
   }
-
-
-
-/*   private validateOwnership(libro: LibroEntity, user: userActiveInterface){
-    if( user.rol !== Rol.ADMIN && libro.userEmail !== user.email ){
-      throw new UnauthorizedException('No tienes permiso para acceder a este Libro');
-    }
-  } */
- 
 }

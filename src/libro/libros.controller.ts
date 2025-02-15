@@ -8,6 +8,8 @@ import { userActiveInterface } from '../common/interfaces/user-active.interface'
 import { LibroService } from './libros.service';
 import { CreateLibroDto } from './dto/create-libros.dto';
 import { UpdateLibroDto } from './dto/update-libros.dto';
+import { UpdateInventarioLibroDto } from 'src/inventario-libros/dto/update-inventario-libro.dto';
+import { CreateInventarioLibroDto } from 'src/inventario-libros/dto/create-inventario-libro.dto';
 
 
 @ApiTags('Libros')
@@ -59,6 +61,27 @@ export class LibroController {
       status: 200
     })
   }
+
+  @Get('/inventario')
+  @ApiOperation({
+    summary: 'Obtiene todos los Libros'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Regresa todos los Libros'
+  })
+  async findAllLibrosDisponibles(
+    @Res() res: Response,
+    @ActiveUser() user: userActiveInterface
+  ) {
+
+    const data = await this.libroService.findAllDisponibles(user);
+    res.status(HttpStatus.OK).json({
+      data,
+      message: 'Libros encontrados',
+      status: 200
+    })
+  }
  
   @Get(':id')
   @ApiOperation({
@@ -77,6 +100,28 @@ export class LibroController {
     res.status(HttpStatus.OK).json({
       data,
       message: 'Libro encontrado',
+      status: 200
+    })
+  }
+
+  @Patch('/inventario/:id')
+  @ApiOperation({
+    summary: 'Actualiza un Libro agregandole un nuevo ejemplar'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Regresa el Libro actualizado con el ejemplar nuevo'
+  })
+  async addInventarioLibro(
+    @Param('id') id: string, 
+    @Body() libroInventario: CreateInventarioLibroDto,
+    @Res() res: Response,
+    @ActiveUser() user: userActiveInterface) {
+
+    const data = await this.libroService.addInventario(+id, libroInventario, user);
+    res.status(HttpStatus.OK).json({
+      data,
+      message: 'Ejemplar agregado al inventario',
       status: 200
     })
   }

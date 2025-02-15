@@ -8,14 +8,16 @@ import { AuthorEntity } from 'src/author/entities/author.entity';
 import { EditorialEntity } from 'src/editorial/entities/editorial.entity';
 import { AuthorModule } from 'src/author/author.module';
 import { FilesModule } from 'src/files/files.module';
+import { InventarioLibroEntity } from 'src/inventario-libros/entities/inventario-libro.entity';
+import { InventarioLibrosService } from 'src/inventario-libros/inventario-libros.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([LibroEntity]), 
+    TypeOrmModule.forFeature([LibroEntity, InventarioLibroEntity]), 
     AuthModule,
     FilesModule,
   ],
   controllers: [LibroController],
-  providers: [LibroService],
+  providers: [LibroService, InventarioLibrosService],
 })
 export class LibroModule {}

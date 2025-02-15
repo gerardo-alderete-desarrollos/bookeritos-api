@@ -50,5 +50,8 @@ export class InventarioLibroEntity {
 
     @Column()
     fecha_compra: Date;
+
+    @Column({ default: true})
+    disponible: boolean;
 }
  

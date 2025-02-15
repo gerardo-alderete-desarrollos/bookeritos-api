@@ -82,8 +82,9 @@ export class UsuarioSuscripcionesController {
     @Param('id') id: number,
     @Body() body: { estatus: Estatus},
     @Res() res: Response) {
-      console.log('id', id);
-      console.log('body', body);
+      console.log('id------------------------------', id);
+      console.log('body------------------------------', body);
+
       
     const data = await this.usuarioSuscripcionesService.changeStatusSuscription(id, body.estatus);
     return res.status(HttpStatus.OK).json({

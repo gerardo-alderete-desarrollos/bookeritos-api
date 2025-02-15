@@ -1,20 +1,8 @@
-import { IsDateString, IsNotEmpty, IsNumber, IsObject } from "class-validator";
+import { IsBoolean, IsDateString, IsNotEmpty, IsNumber, IsObject, IsString } from "class-validator";
 import { EditorialEntity } from "src/editorial/entities/editorial.entity";
 import { IdiomaEntity } from "src/idiomas/entities/idioma.entity";
 
 export class CreateInventarioLibroDto {
-        @IsDateString()
-        @IsNotEmpty()
-        createdAt: Date;
-     
-        @IsDateString()
-        @IsNotEmpty()
-        updatedAt: Date;
-    
-        @IsDateString()
-        @IsNotEmpty()
-        deletedAt: Date;
-    
         @IsObject()
         idioma: IdiomaEntity
     
@@ -36,9 +24,12 @@ export class CreateInventarioLibroDto {
         @IsNumber()
         precio_final: number;
     
-        @IsDateString()
+        @IsString()
         proveedor: string;
     
         @IsDateString()
         fecha_compra: Date;
+
+        @IsBoolean()
+        disponible: boolean;
 }
