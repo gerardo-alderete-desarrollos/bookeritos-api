@@ -7,6 +7,7 @@ import { CategoriaEntity } from 'src/categoria/entities/categoria.entity';
 import { SuscripcionEntity } from 'src/suscripciones/entities/suscripcion.entity';
 import { UsuarioSuscripcionEntity } from 'src/usuario-suscripciones/entities/usuario-suscripcione.entity';
 import { InventarioLibroEntity } from 'src/inventario-libros/entities/inventario-libro.entity';
+import { UpdateInventarioLibroDto } from 'src/inventario-libros/dto/update-inventario-libro.dto';
 
 @Entity('usuarios')
 export class UserEntity {
@@ -48,11 +49,11 @@ export class UserEntity {
     suscripciones: UsuarioSuscripcionEntity[];
 
     @OneToMany(type => InventarioLibroEntity, inventarioLibro => inventarioLibro.usuario)
-    inventario: InventarioLibroEntity[];
+    inventario: InventarioLibroEntity[] | UpdateInventarioLibroDto[];
 
-    @Column({ nullable: true})
+    @Column({ nullable: true}) 
     direccion: string;
-
+ 
     @Column({ nullable: true})
     referencias: string;
 

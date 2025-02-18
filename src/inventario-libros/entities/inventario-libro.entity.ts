@@ -48,7 +48,7 @@ export class InventarioLibroEntity {
     @Column()
     proveedor: string;
 
-    @Column()
+    @Column() 
     fecha_compra: Date;
 
     @Column({ default: true})

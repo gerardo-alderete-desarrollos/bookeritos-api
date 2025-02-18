@@ -3,6 +3,8 @@ import { IsBoolean, IsEmail, IsNumber, IsString, MinLength } from "class-validat
 import { CategoriaEntity } from "src/categoria/entities/categoria.entity";
 import { HijoEntity } from "src/hijo/entities/hijo.entity";
 import { IdiomaEntity } from "src/idiomas/entities/idioma.entity";
+import { UpdateInventarioLibroDto } from "src/inventario-libros/dto/update-inventario-libro.dto";
+import { InventarioLibroEntity } from "src/inventario-libros/entities/inventario-libro.entity";
 
 export class CreateUserDto {
     @IsEmail()
@@ -52,6 +54,7 @@ export class CreateUserDto {
 
     @IsBoolean()
     isProfileComplete?: boolean;
-
+ 
+    inventario?: InventarioLibroEntity[] | UpdateInventarioLibroDto[];
     
 }

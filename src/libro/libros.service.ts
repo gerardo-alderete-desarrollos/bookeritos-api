@@ -78,7 +78,7 @@ export class LibroService {
       .where({id})
       .leftJoinAndSelect('libro.categorias', 'categorias')
       .leftJoinAndSelect('categorias.libros', 'libros')
-      .getOne(); */
+      .getOne(); */ 
 
       if( !libro ) {
         throw new BadRequestException('Libro no encontrado');

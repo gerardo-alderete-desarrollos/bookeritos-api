@@ -8,6 +8,7 @@ import { userActiveInterface } from '../common/interfaces/user-active.interface'
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
+import { UpdateInventarioLibroDto } from 'src/inventario-libros/dto/update-inventario-libro.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -94,6 +95,29 @@ export class UsersController {
       status: 200
     })
   }
+
+  @Patch('addBooksToUser/:id')
+  @ApiOperation({
+    summary: 'Se agrega carrito de compra a usuario'
+  })
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+  async addInventaryToUser(
+    @Param('id') id: string,
+    @Body() updateInventorioLibroDto: UpdateInventarioLibroDto[],
+    @ActiveUser() user: userActiveInterface,
+    @Res() res: Response
+    ) {
+
+    const data = await this.usersService.addBooksToUser(+id, updateInventorioLibroDto, user);
+
+    return res.status(HttpStatus.OK).json({
+      data,
+      message: 'Se asignarion libros correctamente',
+      status: 200
+    })
+  }
+
 
   @Delete(':id')
   @ApiOperation({

@@ -9,6 +9,8 @@ import * as bcryptjs from 'bcryptjs';
 import { HijoService } from 'src/hijo/hijo.service';
 import { CreateHijoDto } from 'src/hijo/dto/create-hijo.dto';
 import { UpdateHijoDto } from 'src/hijo/dto/update-hijo.dto';
+import { UpdateInventarioLibroDto } from 'src/inventario-libros/dto/update-inventario-libro.dto';
+import { InventarioLibroEntity } from 'src/inventario-libros/entities/inventario-libro.entity';
 
 @Injectable()
 export class UsersService {
@@ -50,7 +52,7 @@ export class UsersService {
         hijos: true,
         generosInteres: true,
         idiomasInteres: true,
-        suscripciones: true
+        suscripciones: true,
       }
     })
   }
@@ -62,10 +64,11 @@ export class UsersService {
         hijos: true,
         generosInteres: true,
         idiomasInteres: true,
-        suscripciones: true
+        suscripciones: true,
+        inventario: true
       }
     })
-  }
+  } 
 
 
   async update(id: number, updateUserDto: UpdateUserDto, user: userActiveInterface) {
@@ -80,10 +83,7 @@ export class UsersService {
 
     
     if( updateUserDto?.hijos || updateUserDto.hijos?.length > 0 ){
-
       updateUserDto.hijos.forEach( async(h) => {
-     
-
         if( !h.id ){
           const hijo:CreateHijoDto = {
             edad: h.edad,
@@ -98,12 +98,34 @@ export class UsersService {
         }
       })
 
+      toUpdate.inventario = updateUserDto.inventario;
+
     }
 
     //valida si el usuario completo su perfil
     const updated = this.validateProfileComplete(updateUserDto); 
 
     let update = Object.assign(toUpdate, updated)
+    const userUpdated = await this.userRepository.save(update)
+    return userUpdated;
+  }
+
+  async addBooksToUser(id: number, updateInventorioLibroDto: UpdateInventarioLibroDto[] | InventarioLibroEntity[], user: userActiveInterface) {
+    let toUpdate = await this.findOne(id, user);
+
+    if( !toUpdate ){
+      throw new NotFoundException({ 
+        message: 'No existe usuario con ese ID',
+        status: 400
+      })
+    }
+
+    toUpdate.inventario = updateInventorioLibroDto;
+
+
+    //valida si el usuario completo su perfil
+
+    let update = Object.assign(toUpdate, toUpdate)
     const userUpdated = await this.userRepository.save(update)
     return userUpdated;
   }

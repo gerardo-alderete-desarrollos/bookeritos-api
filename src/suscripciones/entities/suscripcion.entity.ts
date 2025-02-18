@@ -16,6 +16,9 @@ export class SuscripcionEntity {
     @Column()
     descripcion: string;
 
+    @Column({default: 4})
+    cantidadLibros?: number;
+
  /*    @ManyToMany(() => UserEntity, user => user.suscripciones)
     users: UserEntity[] */
 
