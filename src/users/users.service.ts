@@ -163,7 +163,6 @@ export class UsersService {
       updateUserDto.isProfileComplete = false;
 
     }
-    console.log(updateUserDto);
     
     return updateUserDto;
   }

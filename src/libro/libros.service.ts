@@ -103,7 +103,6 @@ export class LibroService {
     
     if(inventario){
       toUpdate?.inventario?.push(inventario);
-      console.log('Libro agregado al inventario', toUpdate);
       const libroUpdated = await this.libroRepository.save(toUpdate)
       return libroUpdated;
     }

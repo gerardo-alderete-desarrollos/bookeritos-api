@@ -24,7 +24,6 @@ export class UsuarioSuscripcionesController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface
     ) { 
-      console.log('---------------', createUsuarioSuscripcionDto);
       try{
         const data = await  this.usuarioSuscripcionesService.createUsuarioSuscripcion(createUsuarioSuscripcionDto); 
         return res.status(HttpStatus.CREATED).json({
@@ -34,8 +33,6 @@ export class UsuarioSuscripcionesController {
         })
         
       } catch(err){
-        console.log(createUsuarioSuscripcionDto)
-        console.log(err);
         
       }
 
@@ -80,11 +77,12 @@ export class UsuarioSuscripcionesController {
   @Patch('/estatus/:id')
   async changeStatus(
     @Param('id') id: number,
-    @Body() body: { estatus: Estatus},
+    @Body() body: { estatus: Estatus | any},
     @Res() res: Response) {
-      console.log('id------------------------------', id);
-      console.log('body------------------------------', body);
-
+      
+      console.log("Entrando al servicio id", id)
+      console.log("Entrando al servicio body", body)
+      console.log("Entrando al servicio", id)
       
     const data = await this.usuarioSuscripcionesService.changeStatusSuscription(id, body.estatus);
     return res.status(HttpStatus.OK).json({

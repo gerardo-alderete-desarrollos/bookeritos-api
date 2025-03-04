@@ -30,8 +30,6 @@ export class UsuarioSuscripcionesService {
   }
 
 async createUsuarioSuscripcion(createUsuarioSuscripcioneDto: CreateUsuarioSuscripcionesDto) { 
-    console.log('createSuscripcioneDto');
-    console.log(createUsuarioSuscripcioneDto);
     const usuarioSuscripcion = await this.usuarioSuscripcionRepository.save(createUsuarioSuscripcioneDto)
     return usuarioSuscripcion;
 }
@@ -43,24 +41,21 @@ async findOne(id: number) {
       suscription: true,
     }});
     const suscripcionByUser = usuariosSuscripcion.filter( us=> us.user.id = id);
-    console.log('findOne ---------', suscripcionByUser.find( us=> us.estatus == Estatus.ACTIVE))
-  return suscripcionByUser.find( us=> us.estatus == Estatus.ACTIVE);
+  return suscripcionByUser;
 }
 
 async changeStatusSuscription(id: number , estatus: Estatus){
-  const toUpdate: any = await this.usuarioSuscripcionRepository.findBy({id})
-
+  const toUpdate: any = await this.usuarioSuscripcionRepository.findBy({id});
+  console.log('TOUPDATE',toUpdate);
+  
+ 
   if( !toUpdate ){
     throw new BadRequestException('No existe una suscripcion con el id ' + id);
   }
-  let updateUsuarioSuscripcioneDto: UpdateUsuarioSuscripcioneDto = {
-    ...toUpdate
-  }
-  updateUsuarioSuscripcioneDto.estatus = estatus;
-  let update = Object.assign(toUpdate, updateUsuarioSuscripcioneDto)
 
-  console.log('update------------', update); 
-  return await this.usuarioSuscripcionRepository.update(updateUsuarioSuscripcioneDto,update);
+  toUpdate[0].estatus = estatus;
+  return await this.usuarioSuscripcionRepository.save(toUpdate[0]);
+
 }
  /*  create(createUsuarioSuscripcioneDto: CreateUsuarioSuscripcioneDto) {
     return 'This action adds a new usuarioSuscripcione';
