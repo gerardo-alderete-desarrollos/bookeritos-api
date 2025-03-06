@@ -24,8 +24,9 @@ export class InventarioLibrosService {
     return `This action returns a #${id} inventarioLibro`;
   }
 
-  update(id: number, updateInventarioLibroDto: UpdateInventarioLibroDto) {
-    return `This action updates a #${id} inventarioLibro`;
+  async update(id: number, updateInventarioLibroDto: UpdateInventarioLibroDto) {
+    const userUpdated = await this.libroRepository.save(updateInventarioLibroDto)
+    return userUpdated;
   }
 
   remove(id: number) {

@@ -11,6 +11,7 @@ import { CreateHijoDto } from 'src/hijo/dto/create-hijo.dto';
 import { UpdateHijoDto } from 'src/hijo/dto/update-hijo.dto';
 import { UpdateInventarioLibroDto } from 'src/inventario-libros/dto/update-inventario-libro.dto';
 import { InventarioLibroEntity } from 'src/inventario-libros/entities/inventario-libro.entity';
+import { InventarioLibrosService } from 'src/inventario-libros/inventario-libros.service';
 
 @Injectable()
 export class UsersService {
@@ -18,8 +19,9 @@ export class UsersService {
   @InjectRepository(UserEntity)
   private userRepository: Repository<UserEntity>
 
-  constructor(private hijoService: HijoService){}
-
+  constructor(private hijoService: HijoService,
+  private readonly inventarioService: InventarioLibrosService){}
+ 
   async create(createUserDto: CreateUserDto, user: userActiveInterface) {
     const u = await this.findOneByEmail(createUserDto.email);
  
@@ -111,6 +113,12 @@ export class UsersService {
   }
 
   async addBooksToUser(id: number, updateInventorioLibroDto: UpdateInventarioLibroDto[] | InventarioLibroEntity[], user: userActiveInterface) {
+
+    updateInventorioLibroDto.forEach( async(h) => {
+        const res = await  this.inventarioService.update(id, h)
+    
+    });
+
     let toUpdate = await this.findOne(id, user);
 
     if( !toUpdate ){

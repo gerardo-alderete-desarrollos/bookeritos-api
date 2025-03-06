@@ -80,9 +80,6 @@ export class UsuarioSuscripcionesController {
     @Body() body: { estatus: Estatus | any},
     @Res() res: Response) {
       
-      console.log("Entrando al servicio id", id)
-      console.log("Entrando al servicio body", body)
-      console.log("Entrando al servicio", id)
       
     const data = await this.usuarioSuscripcionesService.changeStatusSuscription(id, body.estatus);
     return res.status(HttpStatus.OK).json({

@@ -12,5 +12,6 @@ import { InventarioLibroEntity } from './entities/inventario-libro.entity';
   ],
   controllers: [InventarioLibrosController],
   providers: [InventarioLibrosService],
+  exports: [InventarioLibrosService]
 })
 export class InventarioLibrosModule {}

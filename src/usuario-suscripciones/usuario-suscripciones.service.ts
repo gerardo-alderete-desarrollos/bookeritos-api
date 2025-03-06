@@ -46,8 +46,6 @@ async findOne(id: number) {
 
 async changeStatusSuscription(id: number , estatus: Estatus){
   const toUpdate: any = await this.usuarioSuscripcionRepository.findBy({id});
-  console.log('TOUPDATE',toUpdate);
-  
  
   if( !toUpdate ){
     throw new BadRequestException('No existe una suscripcion con el id ' + id);
