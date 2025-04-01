@@ -29,11 +29,21 @@ export class LibroService {
     item.categorias = CreateLibroDto.categorias;
     item.edad_recomendada = CreateLibroDto.edad_recomendada;
     item.author = CreateLibroDto.author;
+    item.inventario = [];
     item.sinopsis = CreateLibroDto.sinopsis;
     
-    const NEW_LIBRO = await this.libroRepository.save(item);
+    console.log('CREATE LIBRO-------');
+    console.log(CreateLibroDto)
+
+    try {
+      const NEW_LIBRO = await this.libroRepository.save(item);
+      return NEW_LIBRO
+    } catch (error) {
+      console.log('ERROR----', error);
+      
+      throw new BadRequestException(error);
+    }
     
-    return NEW_LIBRO;
   }
 
   async findAll(user: userActiveInterface): Promise<LibroEntity[]> {

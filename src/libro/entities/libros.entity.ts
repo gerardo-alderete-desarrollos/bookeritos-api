@@ -11,14 +11,11 @@ export class LibroEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ unique: true })
+    @Column({ unique: false })
     name: string;
 
     @Column()
     photo: string;
-
-    @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
-    createAt: Date;
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
