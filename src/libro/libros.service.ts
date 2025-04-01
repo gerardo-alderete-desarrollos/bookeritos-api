@@ -55,7 +55,7 @@ export class LibroService {
           inventario: true,
         },
         //where: { userEmail: user.email }, // Ajusta según la estructura de tu entidad
-        order: { name: 'asc' }, // Ordenar por título ascendente
+        order: { name: 'desc' }, // Ordenar por título ascendente
       });
     } catch (error) {
       throw new Error(`Error al obtener libros: ${error.message}`);

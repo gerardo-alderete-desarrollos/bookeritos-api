@@ -27,7 +27,8 @@ export class AuthorService {
     return await this.autorRepository.find({
       relations: { 
         libros: true
-      }
+      },
+      order:{ name: 'asc'}
     })
   }
 
