@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, InternalServerErrorException, Param, Patch, Post, Res } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthDecorator } from '../auth/decorators/auth.decorator';
@@ -41,26 +41,31 @@ export class LibroController {
   }
 
   @Get()
-  @ApiOperation({
-    summary: 'Obtiene todos los Libros'
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Regresa todos los Libros'
-  })
-  async findAll(
-    @Res() res: Response,
-    @ActiveUser() user: userActiveInterface
-  ) {
-
-    const data = await this.libroService.findAll(user);
-
-    res.status(HttpStatus.OK).json({
-      data,
-      message: 'Libros encontrados',
-      status: 200
-    })
+  @ApiOperation({ summary: 'Obtiene todos los Libros' })
+  @ApiResponse({ status: 200, description: 'Regresa todos los Libros' })
+  @ApiResponse({ status: 500, description: 'Error interno del servidor' })
+  async findAll(@ActiveUser() user: userActiveInterface) {
+    try {
+      const data = await this.libroService.findAll(user);
+      
+      // Ordenamos los libros por el nombre de forma ascendente
+      const sortedData = data.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1; // `-1` significa que a va antes que b
+        }
+        if (a.name > b.name) {
+          return 1; // `1` significa que a va después de b
+        }
+        return 0; // Si son iguales, no se cambia el orden
+      });
+  
+      return { data: sortedData, message: 'Libros encontrados', status: 200 };
+    } catch (error) {
+      throw new InternalServerErrorException('Error al obtener los libros');
+    }
   }
+  
+
 
   @Get('/inventario')
   @ApiOperation({

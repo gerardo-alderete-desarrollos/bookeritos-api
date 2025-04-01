@@ -47,14 +47,19 @@ export class LibroService {
   }
 
   async findAll(user: userActiveInterface): Promise<LibroEntity[]> {
-    return await this.libroRepository.find({
-      relations: { 
-        author: true,
-        categorias: true,
-        inventario: true,
-      },
-      //where: { userEmail: user.email }
-    })
+    try {
+      return this.libroRepository.find({
+        relations: {
+          author: true,
+          categorias: true,
+          inventario: true,
+        },
+        //where: { userEmail: user.email }, // Ajusta según la estructura de tu entidad
+        order: { name: 'asc' }, // Ordenar por título ascendente
+      });
+    } catch (error) {
+      throw new Error(`Error al obtener libros: ${error.message}`);
+    }
   }
 
   async findAllDisponibles(user: userActiveInterface): Promise<LibroEntity[]> {
@@ -64,11 +69,12 @@ export class LibroService {
         categorias: true,
         inventario: true,
       },
-      where: { 
+      order: { name: 'asc'  }, // Ordenar por título ascendente
+     /*  where: { 
         inventario:{
           disponible: true
         }
-       }
+       } */
     })
   }
 
