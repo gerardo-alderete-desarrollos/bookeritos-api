@@ -84,7 +84,9 @@ export class LibroService {
       relations: {
         categorias: true,
         author: true,
-        inventario: true
+        inventario: {
+          idioma: true
+        }
       },
       where: { id },
       order: { name: 'ASC'}
