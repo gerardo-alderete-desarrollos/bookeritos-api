@@ -11,7 +11,7 @@ export class LibroEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ unique: false })
+    @Column()
     name: string;
 
     @Column()

@@ -112,17 +112,30 @@ export class LibroService {
     const libroUpdated = await this.libroRepository.save(update)
     return libroUpdated;
   }
-  async addInventario(id: number, createInventario: CreateInventarioLibroDto, user: userActiveInterface):Promise<LibroEntity> {
-    let toUpdate = await this.findOne(id, user);
-
-    const inventario = await this.inverntarioService.create(createInventario);
+  async addInventario(id: number, createInventario: CreateInventarioLibroDto, user: userActiveInterface):Promise<LibroEntity | any> {
     
-    if(inventario){
-      toUpdate?.inventario?.push(inventario);
-      const libroUpdated = await this.libroRepository.save(toUpdate)
-      return libroUpdated;
+    try{
+      let toUpdate = await await this.libroRepository.findOne({
+        relations: {
+          inventario: true
+        },
+        where: { id },
+      })
+      console.log('LIBRO ENCONTRADO----', toUpdate);
+      console.log('Inventario create', createInventario)
+      
+      //createInventario.libro
+      const inventario = await this.inverntarioService.create(createInventario);
+      
+      if(inventario){
+        toUpdate?.inventario?.push(inventario);
+        const libroUpdated = await this.libroRepository.save(toUpdate)
+        return libroUpdated;
+      }
+    } catch(error){
+      throw new BadRequestException('Error al agregar al inventario del libro', error);
     }
-    return ;
+    
   }
 
   async remove(id: number, user: userActiveInterface){

@@ -54,6 +54,60 @@ export class UsersController {
     })
   }
 
+  @Get('inventario')
+  @ApiOperation({ summary: 'Obtiene todos los usuarios con su inventario' })
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
+  async findAllInventario(
+    @Res() res: Response, 
+    @ActiveUser() user: userActiveInterface
+  ) {
+    try {
+      // Validación de usuario activo
+      if (!user) {
+        return res.status(HttpStatus.UNAUTHORIZED).json({
+          message: 'Usuario no autorizado',
+          status: HttpStatus.UNAUTHORIZED
+        });
+      }
+  
+      // Validar si el usuario tiene los roles adecuados
+      if (![Rol.ADMIN, Rol.SUPERVISOR].includes(user.rol as Rol)) {
+        return res.status(HttpStatus.FORBIDDEN).json({
+          message: 'No tienes permisos para acceder a esta información',
+          status: HttpStatus.FORBIDDEN
+        });
+      }
+  
+      // Obtener los datos del inventario
+      const data = await this.usersService.findAllInventario();
+  
+      // Validar si hay datos disponibles
+      if (!data || data.length === 0) {
+        return res.status(HttpStatus.NOT_FOUND).json({
+          message: 'No se encontraron usuarios con inventario',
+          status: HttpStatus.NOT_FOUND
+        });
+      }
+  
+      // Respuesta exitosa
+      return res.status(HttpStatus.OK).json({
+        data,
+        message: `Se obtuvieron ${data.length} usuarios con su inventario`,
+        status: HttpStatus.OK
+      });
+  
+    } catch (error) {
+      console.error('Error al obtener inventario de usuarios:', error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        message: 'Error interno del servidor al obtener inventario',
+        error: error.message,
+        status: HttpStatus.INTERNAL_SERVER_ERROR
+      });
+    }
+  }
+  
+
   @Get(':id')
   @ApiOperation({
     summary: 'Encuentras un usuario'

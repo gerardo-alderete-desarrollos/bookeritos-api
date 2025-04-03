@@ -1,6 +1,7 @@
 import { IsBoolean, IsDateString, IsNotEmpty, IsNumber, IsObject, IsString } from "class-validator";
 import { EditorialEntity } from "src/editorial/entities/editorial.entity";
 import { IdiomaEntity } from "src/idiomas/entities/idioma.entity";
+import { LibroEntity } from "src/libro/entities/libros.entity";
 
 export class CreateInventarioLibroDto {
         @IsObject()
@@ -32,4 +33,7 @@ export class CreateInventarioLibroDto {
 
         @IsBoolean()
         disponible: boolean;
+
+        libro: LibroEntity;
+        
 }

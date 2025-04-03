@@ -12,6 +12,7 @@ import { UpdateHijoDto } from 'src/hijo/dto/update-hijo.dto';
 import { UpdateInventarioLibroDto } from 'src/inventario-libros/dto/update-inventario-libro.dto';
 import { InventarioLibroEntity } from 'src/inventario-libros/entities/inventario-libro.entity';
 import { InventarioLibrosService } from 'src/inventario-libros/inventario-libros.service';
+import { Rol } from 'src/common/enums/rol.enum';
 
 @Injectable()
 export class UsersService {
@@ -58,6 +59,33 @@ export class UsersService {
       }
     })
   }
+
+  async findAllInventario() {
+    try {
+      
+  
+      const usersWithInventory = await this.userRepository.find({
+        select: ['id', 'name', 'email', 'telefono'],
+        relations: {
+          suscripciones: {
+            suscription: true
+          },
+          inventario: true
+        }
+      });
+  
+      // Validar si hay datos disponibles
+      if (!usersWithInventory || usersWithInventory.length === 0) {
+        throw new Error('No se encontraron usuarios con inventario');
+      }
+  
+      return usersWithInventory;
+    } catch (error) {
+      console.error('Error al obtener el inventario:', error);
+      throw new Error('Error al recuperar los datos del inventario');
+    }
+  }
+  
 
   async findOne(id: number, user: userActiveInterface) {
     return await this.userRepository.findOne({
