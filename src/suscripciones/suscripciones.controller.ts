@@ -17,8 +17,8 @@ export class SuscripcionesController {
   @ApiOperation({
     summary: 'Obtiene todas la suscripciones'
   })
-  @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+  //@ApiBearerAuth()
+  //@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @Get()
   async findAll(@Res() res: Response) {
     const data = await  this.suscripcionesService.findAll(); 
