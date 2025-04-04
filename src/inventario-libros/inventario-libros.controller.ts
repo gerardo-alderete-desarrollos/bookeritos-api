@@ -47,9 +47,10 @@ export class InventarioLibrosController {
       const data = await this.inventarioLibrosService.findInventarioByUser(userId);
   
       if (!data.length) {
-        return res.status(HttpStatus.NOT_FOUND).json({
+        return res.status(HttpStatus.OK).json({
+          data: [],
           message: `No se encontró inventario para el usuario con ID ${userId}`,
-          status: 404
+          status: 200
         });
       }
   

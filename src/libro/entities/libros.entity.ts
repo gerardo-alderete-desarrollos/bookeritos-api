@@ -14,7 +14,7 @@ export class LibroEntity {
     @Column()
     name: string;
 
-    @Column()
+    @Column({nullable: true})
     photo: string;
 
     @CreateDateColumn({ type: 'timestamp' })

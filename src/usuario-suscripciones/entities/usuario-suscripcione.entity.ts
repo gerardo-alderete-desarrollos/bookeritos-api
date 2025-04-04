@@ -25,12 +25,19 @@ export class UsuarioSuscripcionEntity {
     @IsNotEmpty()
     estatus: string
 
+    @Column({default: 0})
+    cambiosRestantes: number; 
+
     @Column()
     comprobantePago: string;
 
     @Column()
     fechaInicioSuscripcion: Date;
+
     @Column()
     fechaFinSuscripcion: Date;
+
+    @Column({nullable: true, default: null})
+    fechaEntrega?: Date;
 }
   

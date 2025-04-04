@@ -53,5 +53,8 @@ export class InventarioLibroEntity {
 
     @Column({ default: true})
     disponible: boolean;
+
+    @Column({ default: false})
+    isLibroActualAsignado: boolean;
 }
  

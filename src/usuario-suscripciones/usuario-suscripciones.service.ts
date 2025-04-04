@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUsuarioSuscripcioneDto } from './dto/update-usuario-suscripcione.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsuarioSuscripcionEntity } from './entities/usuario-suscripcione.entity';
@@ -29,10 +29,26 @@ export class UsuarioSuscripcionesService {
     })
   }
 
-async createUsuarioSuscripcion(createUsuarioSuscripcioneDto: CreateUsuarioSuscripcionesDto) { 
-    const usuarioSuscripcion = await this.usuarioSuscripcionRepository.save(createUsuarioSuscripcioneDto)
-    return usuarioSuscripcion;
-}
+  async createUsuarioSuscripcion(createUsuarioSuscripcioneDto: CreateUsuarioSuscripcionesDto) {
+    try {
+      console.log('Creando usuario suscripción:', createUsuarioSuscripcioneDto);
+
+      // Guardar en la base de datos
+      const usuarioSuscripcion = await this.usuarioSuscripcionRepository.save(createUsuarioSuscripcioneDto);
+      
+      console.log('Usuario suscripción creada con éxito:', usuarioSuscripcion);
+      return usuarioSuscripcion;
+
+    } catch (error) {
+      console.error('Error al crear usuario suscripción:', error);
+      
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+
+      throw new Error('No se pudo crear la suscripción del usuario. Intente nuevamente.');
+    }
+  }
 
 async findOne(id: number) {
   const usuariosSuscripcion: UsuarioSuscripcionEntity[] = await this.usuarioSuscripcionRepository.find({
@@ -54,6 +70,39 @@ async changeStatusSuscription(id: number , estatus: Estatus){
   toUpdate[0].estatus = estatus;
   return await this.usuarioSuscripcionRepository.save(toUpdate[0]);
 
+}
+async updateUsuarioSuscripcion(updateDto: UpdateUsuarioSuscripcioneDto) {
+  try {
+    console.log('Actualizando usuario suscripción:', updateDto);
+
+    // Validar que el DTO tenga un ID
+    const { id } = updateDto;
+    if (!id) {
+      throw new BadRequestException('El ID de la suscripción es obligatorio.');
+    }
+
+    // Preload carga el objeto existente y aplica los cambios
+    const updatedSubscription = await this.usuarioSuscripcionRepository.preload(updateDto);
+
+    if (!updatedSubscription) {
+      throw new NotFoundException(`No existe una suscripción con el ID ${id}`);
+    }
+
+    // Guardar los cambios en la base de datos
+    await this.usuarioSuscripcionRepository.save(updatedSubscription);
+
+    console.log('Usuario suscripción actualizada con éxito:', updatedSubscription);
+    return updatedSubscription;
+
+  } catch (error) {
+    console.error('Error al actualizar usuario suscripción:', error);
+
+    if (error instanceof BadRequestException || error instanceof NotFoundException) {
+      throw error;
+    }
+
+    throw new Error('No se pudo actualizar la suscripción del usuario. Intente nuevamente.');
+  }
 }
  /*  create(createUsuarioSuscripcioneDto: CreateUsuarioSuscripcioneDto) {
     return 'This action adds a new usuarioSuscripcione';

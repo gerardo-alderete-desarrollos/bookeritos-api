@@ -8,6 +8,7 @@ import { userActiveInterface } from 'src/common/interfaces/user-active.interface
 import { ActiveUser } from 'src/common/decorators/active-user.decorator';
 import { Response } from 'express';
 import { Estatus } from 'src/common/enums/estatus.enum';
+import { UpdateUsuarioSuscripcioneDto } from './dto/update-usuario-suscripcione.dto';
 
 @Controller('usuario-suscripciones')
 export class UsuarioSuscripcionesController {
@@ -85,6 +86,25 @@ export class UsuarioSuscripcionesController {
     return res.status(HttpStatus.OK).json({
       data,
       message: `Se actualizo el estatus correctamente`,
+      status: 200
+    })
+  }
+
+  @ApiOperation({
+    summary: 'Actualiza la suscripcion de un usuario'
+  })
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+  @Patch('/updateUsuarioSuscripcion')
+  async updateUsuarioSuscripcion(
+    @Body() body: UpdateUsuarioSuscripcioneDto,
+    @Res() res: Response) {
+      
+      
+    const data = await this.usuarioSuscripcionesService.updateUsuarioSuscripcion(body);
+    return res.status(HttpStatus.OK).json({
+      data,
+      message: `Se actualizo los parametros de la suscripcion actual del usuario`,
       status: 200
     })
   }
