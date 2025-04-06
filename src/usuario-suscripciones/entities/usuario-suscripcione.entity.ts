@@ -39,5 +39,8 @@ export class UsuarioSuscripcionEntity {
 
     @Column({nullable: true, default: null})
     fechaEntrega?: Date;
+
+    @Column({ default: false})
+    isFechaEntregaConfirmada: boolean;
 }
   

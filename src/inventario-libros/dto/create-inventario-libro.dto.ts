@@ -35,5 +35,10 @@ export class CreateInventarioLibroDto {
         disponible: boolean;
 
         libro: LibroEntity;
+
+        @IsBoolean()
+        isLibroActualAsignado: boolean;
+
+    
         
 }

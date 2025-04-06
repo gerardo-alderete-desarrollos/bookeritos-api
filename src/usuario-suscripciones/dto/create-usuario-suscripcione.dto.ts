@@ -13,7 +13,6 @@ export class CreateUsuarioSuscripcionesDto {
         @IsNumber()
         cambiosRestantes: number;
 
-        fechaEntrega?: Date;
         @IsString()
         estatus: string
         @IsUrl()
@@ -23,6 +22,9 @@ export class CreateUsuarioSuscripcionesDto {
         @IsObject()
         suscription: SuscripcionEntity;
 
+        fechaEntrega?: Date;
+        @IsBoolean()
+        isFechaEntregaConfirmada: boolean;
 
 
 } 
