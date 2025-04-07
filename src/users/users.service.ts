@@ -65,7 +65,7 @@ export class UsersService {
       
   
       const usersWithInventory = await this.userRepository.find({
-        select: ['id', 'name', 'email', 'telefono'],
+        select: ['id', 'name', 'email', 'telefono', 'createAt'],
         relations: {
           suscripciones: {
             suscription: true

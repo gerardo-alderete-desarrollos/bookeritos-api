@@ -50,79 +50,88 @@ export class InventarioLibrosService {
     }
   }
 
-  async desasignarLibros(idUser: number) {
-    // Validación del idUser
+  async desasignarYAsignarLibros(idUser: number) {
     if (isNaN(idUser) || idUser <= 0) {
       throw new Error('ID de usuario inválido');
     }
   
-    // Crear un QueryRunner para la transacción
     const queryRunner = this.userRepository.manager.connection.createQueryRunner();
-    
-    // Iniciar transacción
+    await queryRunner.connect();
     await queryRunner.startTransaction();
   
     try {
-      // Buscar el inventario asignado al usuario
-      const tempInventarioAsignedByUser: InventarioLibroEntity[] = await this.findInventarioByUser(idUser);
-  
-      // Validación de si el usuario tiene libros asignados
-      if (!tempInventarioAsignedByUser || tempInventarioAsignedByUser.length === 0) {
-        throw new Error('El usuario no tiene libros asignados');
-      }
-  
-      // Procesar los libros asignados de manera concurrente usando Promise.all()
-      const updatePromises = tempInventarioAsignedByUser.map(async (ti) => {
-        if (!ti.disponible) {
-          // Crear una instancia de la entidad InventarioLibroEntity
-          const invTemp = new InventarioLibroEntity();
-          
-          // Asignar los valores de la entidad
-          invTemp.id = ti.id;
-          invTemp.disponible = true;
-          invTemp.usuario = null;
-          
-          // Guardar los cambios en el inventario dentro de la transacción
-          return queryRunner.manager.save(InventarioLibroEntity, invTemp);
-        }
-      });
-  
-      // Esperar a que todas las actualizaciones de inventarios se completen
-      await Promise.all(updatePromises);
-  
-      // Buscar el usuario en la base de datos
-      const userFinded = await queryRunner.manager.findOne(UserEntity, {
+      // Buscar usuario
+      const user = await queryRunner.manager.findOne(UserEntity, {
         where: { id: idUser },
         relations: { inventario: true }
       });
   
-      // Validación de si el usuario existe
-      if (!userFinded) {
+      if (!user) {
         throw new Error('Usuario no encontrado');
       }
   
-      // Limpiar el inventario del usuario
-      userFinded.inventario = [];
+      // Buscar inventario directamente con queryRunner
+      const libros = await queryRunner.manager.find(InventarioLibroEntity, {
+        where: { usuario: { id: idUser } },
+      });
   
-      // Guardar la actualización del usuario con el inventario vacío
-      await queryRunner.manager.save(UserEntity, userFinded);
+      if (!libros || libros.length === 0) {
+        throw new Error('El usuario no tiene libros asignados');
+      }
   
-      // Confirmar la transacción si todo está correcto
+      let asignados = 0;
+      let desasignados = 0;
+  
+      const updatePromises = libros.map((libro) => {
+        const invTemp = new InventarioLibroEntity();
+        invTemp.id = libro.id;
+  
+        if (libro.isLibroActualAsignado) {
+          // DESASIGNAR
+          invTemp.disponible = true;
+          invTemp.usuario = null;
+          invTemp.isLibroActualAsignado = false;
+          desasignados++;
+        } else {
+          // ASIGNAR
+          invTemp.disponible = false;
+          invTemp.usuario = user;
+          invTemp.isLibroActualAsignado = true;
+          asignados++;
+        }
+  
+        return queryRunner.manager.save(InventarioLibroEntity, invTemp);
+      });
+  
+      await Promise.all(updatePromises);
+  
+      // Actualizar el inventario del usuario
+      const inventarioActualizado = await queryRunner.manager.find(InventarioLibroEntity, {
+        where: { usuario: { id: idUser } }
+      });
+  
+      user.inventario = inventarioActualizado;
+      await queryRunner.manager.save(UserEntity, user);
+  
       await queryRunner.commitTransaction();
   
-      return tempInventarioAsignedByUser;
+      // Registro informativo en consola
+      console.log(`${asignados} libros asignados, ${desasignados} libros desasignados`);
+  
+      return {
+        asignados,
+        desasignados,
+        inventarioFinal: inventarioActualizado
+      };
   
     } catch (error) {
-      // Revertir la transacción en caso de error
       await queryRunner.rollbackTransaction();
-  
-      // Proveer un mensaje de error adecuado
-      throw new Error(`Error al desasignar libros: ${error.message}`);
+      throw new Error(`Error al procesar libros: ${error.message}`);
     } finally {
-      // Liberar el query runner
       await queryRunner.release();
     }
   }
+  
   
 
   findOne(id: number) {

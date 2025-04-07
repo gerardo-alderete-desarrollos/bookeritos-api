@@ -84,7 +84,7 @@ export class InventarioLibrosController {
       }
   
       // ✅ Llamar al servicio
-      const resultado = await this.inventarioLibrosService.desasignarLibros(userId);
+      const resultado = await this.inventarioLibrosService.desasignarYAsignarLibros(userId);
   
       // ✅ Validación de datos retornados
       if (!resultado) {
