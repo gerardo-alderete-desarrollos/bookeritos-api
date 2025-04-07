@@ -70,7 +70,9 @@ export class UsersService {
           suscripciones: {
             suscription: true
           },
-          inventario: true
+          inventario: {
+            libro: true
+          },
         }
       });
   
