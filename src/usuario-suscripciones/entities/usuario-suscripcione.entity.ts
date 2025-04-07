@@ -34,7 +34,7 @@ export class UsuarioSuscripcionEntity {
     @Column()
     fechaInicioSuscripcion: Date;
 
-    @Column()
+    @Column({nullable: true, default: null})
     fechaFinSuscripcion: Date;
 
     @Column({nullable: true, default: null})
