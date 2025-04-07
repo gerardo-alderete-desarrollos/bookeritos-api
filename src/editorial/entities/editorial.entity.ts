@@ -4,7 +4,7 @@ import { Column, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } f
 
 @Entity('editorial')
 export class EditorialEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id: number
 
     @Column() 

@@ -7,7 +7,7 @@ import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, PrimaryGene
 
 @Entity('usuarios_suscripcion')
 export class UsuarioSuscripcionEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id: number;
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;

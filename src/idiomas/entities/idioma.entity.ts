@@ -5,7 +5,7 @@ import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColum
 
 @Entity('idiomas')
 export class IdiomaEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id: number;  
 
     @Column()

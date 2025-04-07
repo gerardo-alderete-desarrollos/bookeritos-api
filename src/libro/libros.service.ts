@@ -135,6 +135,7 @@ export class LibroService {
         return libroUpdated;
       }
     } catch(error){
+      console.log('ERROR AL AGREGAR LIBRO', error);
       throw new BadRequestException('Error al agregar al inventario del libro', error);
     }
     

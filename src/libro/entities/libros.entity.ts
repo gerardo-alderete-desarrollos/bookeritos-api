@@ -8,7 +8,7 @@ import { InventarioLibroEntity } from "src/inventario-libros/entities/inventario
 
 @Entity('libro')
 export class LibroEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id: number;
 
     @Column()

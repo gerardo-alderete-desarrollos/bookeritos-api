@@ -4,7 +4,7 @@ import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "t
 
 @Entity('suscripcion')
 export class SuscripcionEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id: number;  
     
     @Column()

@@ -12,7 +12,7 @@ import { UpdateInventarioLibroDto } from 'src/inventario-libros/dto/update-inven
 @Entity('usuarios')
 export class UserEntity {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id: number;
 
     @Column()

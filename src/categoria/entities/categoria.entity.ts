@@ -4,8 +4,8 @@ import { LibroEntity } from "src/libro/entities/libros.entity";
 
 @Entity('categoria')
 export class CategoriaEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
     @Column({unique: true})
     name: string;
