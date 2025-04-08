@@ -72,7 +72,7 @@ export class EditorialController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface
   ) {
-    const data = await this.editorialService.findOne(+id);
+    const data = await this.editorialService.findOne(id);
 
     res.status(HttpStatus.OK).json({
       data,
@@ -95,7 +95,7 @@ export class EditorialController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface
   ) {
-    const data = await this.editorialService.update(+id, updateEditorialDto);
+    const data = await this.editorialService.update(id, updateEditorialDto);
     res.status(HttpStatus.OK).json({
       data,
       message: 'Editorial actualizada',
@@ -116,7 +116,7 @@ export class EditorialController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
 
-      const data = await this.editorialService.remove(+id);
+      const data = await this.editorialService.remove(id);
 
       res.status(HttpStatus.OK).json({
         data,

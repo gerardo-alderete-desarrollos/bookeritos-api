@@ -4,7 +4,7 @@ import { UserEntity } from "src/users/entities/user.entity";
 import { IsNull } from "typeorm";
 
 export class CreateUsuarioSuscripcionesDto {
-        id?: number;
+        id?: string;
 
         @IsOptional()
         @IsDateString()

@@ -15,7 +15,7 @@ export class HijoService {
     return await this.hijoRepository.save(createHijoDto);
   }
 
-  async update(id: number, updateHijoDto: UpdateHijoDto) {
+  async update(id: string, updateHijoDto: UpdateHijoDto) {
     let toUpdate = await this.findOne(id);
     
     let update = Object.assign(toUpdate, updateHijoDto)
@@ -23,7 +23,7 @@ export class HijoService {
     return hijoUpdated;
   }
   
-  async findOne(id: number) {
+  async findOne(id: string) {
     const hijo = await this.hijoRepository.findOne({
       where: { id } 
     })

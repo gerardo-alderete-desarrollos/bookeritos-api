@@ -3,13 +3,13 @@ import { Column, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } f
 
 @Entity('autor')
 export class AuthorEntity {
-    @PrimaryGeneratedColumn('increment')
-    id: number
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
     name: string
  
-    @Column()
+    @Column({nullable: true})
     photo: string
      
     @Column()

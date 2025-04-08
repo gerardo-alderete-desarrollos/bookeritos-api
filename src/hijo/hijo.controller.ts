@@ -14,7 +14,7 @@ export class HijoController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateHijoDto: UpdateHijoDto) {
-    return this.hijoService.update(+id, updateHijoDto);
+    return this.hijoService.update(id, updateHijoDto);
   }
 /* 
   @Get()

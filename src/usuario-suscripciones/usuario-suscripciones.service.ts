@@ -50,7 +50,7 @@ export class UsuarioSuscripcionesService {
     }
   }
 
-async findOne(id: number) {
+async findOne(id: string) {
   const usuariosSuscripcion: UsuarioSuscripcionEntity[] = await this.usuarioSuscripcionRepository.find({
     relations:{
       user: true,
@@ -60,7 +60,7 @@ async findOne(id: number) {
   return suscripcionByUser;
 }
 
-async changeStatusSuscription(id: number , estatus: Estatus){
+async changeStatusSuscription(id: string , estatus: Estatus){
   const toUpdate: any = await this.usuarioSuscripcionRepository.findBy({id});
  
   if( !toUpdate ){

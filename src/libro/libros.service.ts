@@ -24,7 +24,6 @@ export class LibroService {
   async create(CreateLibroDto: CreateLibroDto, user: userActiveInterface): Promise<any> { 
     let item = new LibroEntity();
     item.name = CreateLibroDto.name;
-    item.userEmail = user.email;
     item.photo = CreateLibroDto.photo;
     item.categorias = CreateLibroDto.categorias;
     item.edad_recomendada = CreateLibroDto.edad_recomendada;
@@ -78,7 +77,7 @@ export class LibroService {
     })
   }
 
-  async findOne(id: number, user: userActiveInterface):Promise<LibroEntity> {
+  async findOne(id: string, user: userActiveInterface):Promise<LibroEntity> {
 
     const libro = await this.libroRepository.findOne({
       relations: {
@@ -107,14 +106,14 @@ export class LibroService {
     return libro;
   } 
 
-  async update(id: number, updateLibroDto: UpdateLibroDto, user: userActiveInterface):Promise<LibroEntity> {
+  async update(id: string, updateLibroDto: UpdateLibroDto, user: userActiveInterface):Promise<LibroEntity> {
     let toUpdate = await this.findOne(id, user);
     
     let update = Object.assign(toUpdate, updateLibroDto)
     const libroUpdated = await this.libroRepository.save(update)
     return libroUpdated;
   }
-  async addInventario(id: number, createInventario: CreateInventarioLibroDto, user: userActiveInterface):Promise<LibroEntity | any> {
+  async addInventario(id: string, createInventario: CreateInventarioLibroDto, user: userActiveInterface):Promise<LibroEntity | any> {
     
     try{
       let toUpdate = await await this.libroRepository.findOne({
@@ -141,7 +140,7 @@ export class LibroService {
     
   }
 
-  async remove(id: number, user: userActiveInterface){
+  async remove(id: string, user: userActiveInterface){
     const libro = await this.findOne(id,user)
 
     await this.fileService.deleteImage(libro.photo);

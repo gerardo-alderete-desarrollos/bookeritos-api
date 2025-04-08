@@ -46,7 +46,7 @@ export class UsuarioSuscripcionesController {
   @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @Get(':id')
   async findSuscriptionsByUser(@Res() res: Response,@Param('id') id: string) {
-    const data = await  this.usuarioSuscripcionesService.findOne(+id); 
+    const data = await  this.usuarioSuscripcionesService.findOne(id); 
 
        return res.status(HttpStatus.OK).json({
           data,
@@ -77,7 +77,7 @@ export class UsuarioSuscripcionesController {
   @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @Patch('/estatus/:id')
   async changeStatus(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() body: { estatus: Estatus | any},
     @Res() res: Response) {
       

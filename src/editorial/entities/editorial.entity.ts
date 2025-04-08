@@ -4,13 +4,13 @@ import { Column, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } f
 
 @Entity('editorial')
 export class EditorialEntity {
-    @PrimaryGeneratedColumn('increment')
-    id: number
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column() 
     name: string
 
-    @Column()
+    @Column({nullable: true})
     photo: string
 
     @OneToMany(() => InventarioLibroEntity, (inventario) => inventario.editorial)

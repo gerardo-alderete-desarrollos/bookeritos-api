@@ -4,8 +4,8 @@ import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "t
 
 @Entity('suscripcion')
 export class SuscripcionEntity {
-    @PrimaryGeneratedColumn('increment')
-    id: number;  
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
     
     @Column()
     name: string;

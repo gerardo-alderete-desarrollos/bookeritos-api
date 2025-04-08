@@ -65,7 +65,7 @@ export class UsersService {
       
   
       const usersWithInventory = await this.userRepository.find({
-        select: ['id', 'name', 'email', 'telefono', 'createAt'],
+        select: ['id', 'name', 'email', 'telefono', 'createdAt'],
         relations: {
           suscripciones: {
             suscription: true
@@ -89,7 +89,7 @@ export class UsersService {
   }
   
 
-  async findOne(id: number, user: userActiveInterface) {
+  async findOne(id: string, user: userActiveInterface) {
     return await this.userRepository.findOne({
       where: { id },
       relations: {
@@ -103,7 +103,7 @@ export class UsersService {
   } 
 
 
-  async update(id: number, updateUserDto: UpdateUserDto, user: userActiveInterface) {
+  async update(id: string, updateUserDto: UpdateUserDto, user: userActiveInterface) {
     let toUpdate = await this.findOne(id, user);
 
     if( !toUpdate ){
@@ -143,7 +143,7 @@ export class UsersService {
   }
 
   async addBooksToUser(
-    id: number,
+    id: string,
     updateInventorioLibroDto: UpdateInventarioLibroDto[] | InventarioLibroEntity[],
     user: userActiveInterface
   ) {
@@ -184,7 +184,7 @@ export class UsersService {
   }
   
 
-  async remove(id: number, user: userActiveInterface) {
+  async remove(id: string, user: userActiveInterface) {
     const u = await this.findOne(id, user);
 
     if( !u ){

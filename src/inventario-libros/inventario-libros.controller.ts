@@ -33,23 +33,14 @@ export class InventarioLibrosController {
     description: 'No se encontró inventario para el usuario'
   })
   async findOne(@Param('id') id: string, @Res() res: Response) {
-    const userId = parseInt(id, 10);
-  
-    // Validación de ID de usuario
-    if (isNaN(userId) || userId <= 0) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'ID de usuario inválido',
-        status: 400
-      });
-    }
   
     try {
-      const data = await this.inventarioLibrosService.findInventarioByUser(userId);
+      const data = await this.inventarioLibrosService.findInventarioByUser(id.toString());
   
       if (!data.length) {
         return res.status(HttpStatus.OK).json({
           data: [],
-          message: `No se encontró inventario para el usuario con ID ${userId}`,
+          message: `No se encontró inventario para el usuario con ID ${id}`,
           status: 200
         });
       }
@@ -61,7 +52,7 @@ export class InventarioLibrosController {
       });
   
     } catch (error) {
-      console.error(`Error obteniendo inventario para usuario ${userId}:`, error);
+      console.error(`Error obteniendo inventario para usuario ${id}:`, error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         message: 'Error interno del servidor',
         status: 500
@@ -76,24 +67,18 @@ export class InventarioLibrosController {
   @ApiResponse({ status: 404, description: 'No se encontraron libros asignados' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
   async desasignarLibros(@Param('id') id: string) {
-      const userId = Number(id);
-  
-      // ✅ Validación del ID
-      if (!Number.isInteger(userId) || userId <= 0) {
-          throw new HttpException('ID de usuario inválido. Debe ser un número entero positivo.', HttpStatus.BAD_REQUEST);
-      }
-  
+
       // ✅ Llamar al servicio
-      const resultado = await this.inventarioLibrosService.desasignarYAsignarLibros(userId);
+      const resultado = await this.inventarioLibrosService.desasignarYAsignarLibros(id);
   
       // ✅ Validación de datos retornados
       if (!resultado) {
-          throw new HttpException(`No se encontraron libros asignados para el usuario con ID ${userId}.`, HttpStatus.NOT_FOUND);
+          throw new HttpException(`No se encontraron libros asignados para el usuario con ID ${id}.`, HttpStatus.NOT_FOUND);
       }
   
       return {
           data: resultado,
-          message: `Se han desasignado los libros del usuario con ID ${userId}.`,
+          message: `Se han desasignado los libros del usuario con ID ${id}.`,
           status: HttpStatus.OK
       };
   }
@@ -101,11 +86,11 @@ export class InventarioLibrosController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateInventarioLibroDto: UpdateInventarioLibroDto) {
-    return this.inventarioLibrosService.update(+id, updateInventarioLibroDto);
+    return this.inventarioLibrosService.update(id, updateInventarioLibroDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.inventarioLibrosService.remove(+id);
+    return this.inventarioLibrosService.remove(id);
   }
 }

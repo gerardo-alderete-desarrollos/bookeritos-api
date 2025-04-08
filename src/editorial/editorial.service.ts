@@ -33,7 +33,7 @@ export class EditorialService {
     })
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const editorial = await this.editorialRepository.findOne({
       relations: {
         libros: true
@@ -48,7 +48,7 @@ export class EditorialService {
     return editorial;
   }
 
-  async update(id: number, updateEditorialDto: UpdateEditorialDto):Promise<EditorialEntity> {
+  async update(id: string, updateEditorialDto: UpdateEditorialDto):Promise<EditorialEntity> {
     let toUpdate = await this.findOne(id);
     
     let update = Object.assign(toUpdate, updateEditorialDto)
@@ -56,7 +56,7 @@ export class EditorialService {
     return libroUpdated;
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.findOne(id)
     return await this.editorialRepository.softDelete(id);
   }

@@ -120,7 +120,7 @@ export class UsersController {
     @ActiveUser() user: userActiveInterface) {
       
 
-    const data = await this.usersService.findOne(+id, user);
+    const data = await this.usersService.findOne(id, user);
     return res.status(HttpStatus.OK).json({
       data,
       message: 'Usuario cargado correctamente',
@@ -141,7 +141,7 @@ export class UsersController {
     @Res() res: Response
     ) {
 
-    const data = await this.usersService.update(+id, updateUserDto, user);
+    const data = await this.usersService.update(id, updateUserDto, user);
 
     return res.status(HttpStatus.OK).json({
       data,
@@ -163,7 +163,7 @@ export class UsersController {
     @Res() res: Response
     ) {
 
-    const data = await this.usersService.addBooksToUser(+id, updateInventorioLibroDto, user);
+    const data = await this.usersService.addBooksToUser(id, updateInventorioLibroDto, user);
 
     return res.status(HttpStatus.OK).json({
       data,
@@ -183,7 +183,7 @@ export class UsersController {
     @Param('id') id: string,
     @ActiveUser() user: userActiveInterface,
     @Res() res: Response) {
-    const data = await this.usersService.remove(+id, user);
+    const data = await this.usersService.remove(id, user);
 
     return res.status(HttpStatus.OK).json({
       data,

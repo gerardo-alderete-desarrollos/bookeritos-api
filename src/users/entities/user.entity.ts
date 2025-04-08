@@ -12,8 +12,8 @@ import { UpdateInventarioLibroDto } from 'src/inventario-libros/dto/update-inven
 @Entity('usuarios')
 export class UserEntity {
 
-    @PrimaryGeneratedColumn('increment')
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
     name: string;
@@ -76,13 +76,13 @@ export class UserEntity {
     preguntasComentarios: string;
     
     @DeleteDateColumn()
-    deleteAt: Date;
+    deletedAt: Date;
 
     @CreateDateColumn()
-    createAt: Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updateAt: Date;
+    updatedAt: Date;
 
     @Column({ default: false, nullable: true})
     isProfileComplete: boolean;

@@ -100,7 +100,7 @@ export class LibroController {
     @Param('id') id: string, 
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.libroService.findOne(+id, user);
+    const data = await this.libroService.findOne(id, user);
 
     res.status(HttpStatus.OK).json({
       data,
@@ -123,7 +123,7 @@ export class LibroController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
 
-    const data = await this.libroService.addInventario(+id, libroInventario, user);
+    const data = await this.libroService.addInventario(id, libroInventario, user);
     res.status(HttpStatus.OK).json({
       data,
       message: 'Ejemplar agregado al inventario',
@@ -145,7 +145,7 @@ export class LibroController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
 
-    const data = await this.libroService.update(+id, updateLibroDto, user);
+    const data = await this.libroService.update(id, updateLibroDto, user);
     res.status(HttpStatus.OK).json({
       data,
       message: 'Libro actualizado',
@@ -166,7 +166,7 @@ export class LibroController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
     
-      const data = await this.libroService.remove(+id, user);
+      const data = await this.libroService.remove(id, user);
 
       res.status(HttpStatus.OK).json({
         data,

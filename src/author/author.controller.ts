@@ -71,7 +71,7 @@ export class AuthorController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface
   ) {
-    const data = await this.authorService.findOne(+id);
+    const data = await this.authorService.findOne(id);
 
     res.status(HttpStatus.OK).json({
       data,
@@ -94,7 +94,7 @@ export class AuthorController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface
   ) {
-    const data = await this.authorService.update(+id, updateAuthorDto);
+    const data = await this.authorService.update(id, updateAuthorDto);
     res.status(HttpStatus.OK).json({
       data,
       message: 'Autor actualizado',
@@ -115,7 +115,7 @@ export class AuthorController {
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface
   ) {
-    const data = await this.authorService.remove(+id);
+    const data = await this.authorService.remove(id);
 
       res.status(HttpStatus.OK).json({
         data,

@@ -19,9 +19,7 @@ export class CategoriaService {
     let item = new CategoriaEntity();
     item.name = CreateCategoriaDto.name;
     item.photo = CreateCategoriaDto.photo;
-    item.updateAt = CreateCategoriaDto.updateAt;
     item.libros = CreateCategoriaDto.libros;
-    item.userEmail = user.email
     
     const NEW_CATEGORIA = await this.categoriaRepository.save(item);
     
@@ -81,7 +79,7 @@ export class CategoriaService {
   }
 
   private validateOwnership(excercise: CategoriaEntity, user: userActiveInterface){
-    if( user.rol !== Rol.ADMIN && excercise.userEmail !== user.email ){
+    if( user.rol !== Rol.ADMIN ){
       throw new UnauthorizedException('No tienes permiso para acceder a esta Categoria');
     }
   }

@@ -8,8 +8,8 @@ import { InventarioLibroEntity } from "src/inventario-libros/entities/inventario
 
 @Entity('libro')
 export class LibroEntity {
-    @PrimaryGeneratedColumn('increment')
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
     name: string;
@@ -32,9 +32,9 @@ export class LibroEntity {
     @JoinTable()
     categorias: CategoriaEntity[];  
 
-    @ManyToOne(() => UserEntity) 
+ /*    @ManyToOne(() => UserEntity) 
     @JoinColumn({ name: 'userEmail', referencedColumnName: 'email',  })
-    user: UserEntity;
+    user: UserEntity; */
   
     @ManyToOne(() => AuthorEntity, (author) => author.libros)
     author: AuthorEntity 
@@ -42,10 +42,10 @@ export class LibroEntity {
     @OneToMany(type => InventarioLibroEntity, inventarioLibro => inventarioLibro.libro)
     inventario: InventarioLibroEntity[];
 
-    @Column()
-    userEmail: string;
+   /*  @Column()
+    userEmail: string; */
 
-    @Column()
+    @Column({nullable: true})
     edad_recomendada: string;
 
     @Column({ nullable: true})

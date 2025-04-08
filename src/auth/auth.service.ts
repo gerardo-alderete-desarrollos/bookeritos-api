@@ -60,7 +60,7 @@ export class AuthService {
                 email: user.email,
                 rol: user.rol,
                 id: user.id,
-                deleteAt: user.deleteAt,
+                deletedAt: user.deletedAt,
             }
         };
     }

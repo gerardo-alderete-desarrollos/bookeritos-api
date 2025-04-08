@@ -6,8 +6,8 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryG
 
 @Entity('inventario_libros')
 export class InventarioLibroEntity {
-    @PrimaryGeneratedColumn('increment')
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;

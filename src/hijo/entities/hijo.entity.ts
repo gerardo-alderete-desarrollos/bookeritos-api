@@ -3,8 +3,8 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('hijos')
 export class HijoEntity {
-    @PrimaryGeneratedColumn('increment')
-    id: number; 
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
     name: string;

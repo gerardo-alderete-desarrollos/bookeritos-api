@@ -32,7 +32,7 @@ export class AuthorService {
     })
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const autor = await this.autorRepository.findOne({
       relations: {
         libros: true
@@ -47,7 +47,7 @@ export class AuthorService {
     return autor;
   }
 
-  async update(id: number, updateAuthorDto: UpdateAuthorDto):Promise<AuthorEntity> {
+  async update(id: string, updateAuthorDto: UpdateAuthorDto):Promise<AuthorEntity> {
     let toUpdate = await this.findOne(id);
     
     let update = Object.assign(toUpdate, updateAuthorDto)
@@ -55,7 +55,7 @@ export class AuthorService {
     return autorUpdated;
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.findOne(id)
     return await this.autorRepository.softDelete(id);
   }

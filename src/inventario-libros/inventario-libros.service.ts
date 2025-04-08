@@ -31,11 +31,11 @@ export class InventarioLibrosService {
         }
   }
 
-  async findInventarioByUser(idUser: number): Promise<InventarioLibroEntity[]> {
-    if (!idUser || idUser <= 0) {
+  async findInventarioByUser(idUser: string): Promise<InventarioLibroEntity[]> {
+/*     if (!idUser || idUser <= 0) {
       console.warn("ID de usuario inválido:", idUser);
       return [];
-    }
+    } */
   
     try {
       const inventario = await this.inventarioLibroRepository.find({
@@ -50,10 +50,7 @@ export class InventarioLibrosService {
     }
   }
 
-  async desasignarYAsignarLibros(idUser: number) {
-    if (isNaN(idUser) || idUser <= 0) {
-      throw new Error('ID de usuario inválido');
-    }
+  async desasignarYAsignarLibros(idUser: string) {
   
     const queryRunner = this.userRepository.manager.connection.createQueryRunner();
     await queryRunner.connect();
@@ -134,11 +131,11 @@ export class InventarioLibrosService {
   
   
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} inventarioLibro`;
   }
 
-  async update(id: number, updateInventarioLibroDto: UpdateInventarioLibroDto) {
+  async update(id: string, updateInventarioLibroDto: UpdateInventarioLibroDto) {
     // Verificar si el registro existe
     const existingInventario = await this.inventarioLibroRepository.findOne({ where: { id } });
   
@@ -154,7 +151,7 @@ export class InventarioLibrosService {
     return await this.inventarioLibroRepository.save(updated);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} inventarioLibro`;
   }
 }
