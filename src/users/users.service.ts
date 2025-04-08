@@ -142,31 +142,47 @@ export class UsersService {
     return userUpdated;
   }
 
-  async addBooksToUser(id: number, updateInventorioLibroDto: UpdateInventarioLibroDto[] | InventarioLibroEntity[], user: userActiveInterface) {
-
-    updateInventorioLibroDto.forEach( async(h) => {
-        const res = await  this.inventarioService.update(id, h)
-    
-    });
-
-    let toUpdate = await this.findOne(id, user);
-
-    if( !toUpdate ){
-      throw new NotFoundException({ 
+  async addBooksToUser(
+    id: number,
+    updateInventorioLibroDto: UpdateInventarioLibroDto[] | InventarioLibroEntity[],
+    user: userActiveInterface
+  ) {
+    // Validar usuario
+    const toUpdate = await this.findOne(id, user);
+    if (!toUpdate) {
+      throw new NotFoundException({
         message: 'No existe usuario con ese ID',
         status: 400
-      })
+      });
     }
+  
+    // Validar lista de libros
+    if (!updateInventorioLibroDto || updateInventorioLibroDto.length === 0) {
+      throw new BadRequestException({
+        message: 'No se proporcionaron libros para asignar',
+        status: 400
+      });
+    }
+  
+    // Actualizar libros en paralelo
+    const updatedLibros = await Promise.all(
+      updateInventorioLibroDto.map(libro =>
 
-    toUpdate.inventario = updateInventorioLibroDto;
-
-
-    //valida si el usuario completo su perfil
-
-    let update = Object.assign(toUpdate, toUpdate)
-    const userUpdated = await this.userRepository.save(update)
+        this.inventarioService.update(libro.id, libro)
+      )
+    );
+  
+    console.log('Libros actualizados:', updatedLibros);
+    console.log('Usuario a actualizar:', toUpdate);
+    // Agregar los libros actualizados al usuario
+    toUpdate.inventario.push(...updatedLibros);
+    console.log('Libros del usuario actualizados:', toUpdate.inventario);
+  
+    // Guardar usuario actualizado
+    const userUpdated = await this.userRepository.save(toUpdate);
     return userUpdated;
   }
+  
 
   async remove(id: number, user: userActiveInterface) {
     const u = await this.findOne(id, user);

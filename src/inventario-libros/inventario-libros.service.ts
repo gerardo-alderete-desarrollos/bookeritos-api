@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UseFilters } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UseFilters } from '@nestjs/common';
 import { CreateInventarioLibroDto } from './dto/create-inventario-libro.dto';
 import { UpdateInventarioLibroDto } from './dto/update-inventario-libro.dto';
 import { Repository } from 'typeorm';
@@ -139,8 +139,19 @@ export class InventarioLibrosService {
   }
 
   async update(id: number, updateInventarioLibroDto: UpdateInventarioLibroDto) {
-    const userUpdated = await this.inventarioLibroRepository.save(updateInventarioLibroDto)
-    return userUpdated;
+    // Verificar si el registro existe
+    const existingInventario = await this.inventarioLibroRepository.findOne({ where: { id } });
+  
+    if (!existingInventario) {
+      throw new NotFoundException(`Inventario con ID ${id} no encontrado.`);
+    }
+  
+    // Actualizar solo los campos que vienen en el DTO
+    const updated = Object.assign(existingInventario, updateInventarioLibroDto);
+  
+    // Guardar cambios
+    console.log('Actualizando inventario:', updated);
+    return await this.inventarioLibroRepository.save(updated);
   }
 
   remove(id: number) {
