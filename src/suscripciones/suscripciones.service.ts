@@ -18,7 +18,7 @@ export class SuscripcionesService {
           users: true
       },
       order: {
-        id: 'ASC'
+        precio: 'ASC'
       }
       ,
     })
