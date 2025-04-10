@@ -39,7 +39,7 @@ export class CategoriaService {
     })
   }
 
-  async findOne(id: number, user: userActiveInterface):Promise<CategoriaEntity> {
+  async findOne(id: string, user: userActiveInterface):Promise<CategoriaEntity> {
     const categorieMuscle = await this.categoriaRepository
     .createQueryBuilder('categorias')
     .where({id})
@@ -56,7 +56,7 @@ export class CategoriaService {
     
   }
 
-  async update(id: number, UpdateCategoriaDto: UpdateCategoriaDto,user: userActiveInterface):Promise<CategoriaEntity> {
+  async update(id: string, UpdateCategoriaDto: UpdateCategoriaDto,user: userActiveInterface):Promise<CategoriaEntity> {
     let toUpdate = await this.findOne(id, user);
     
     let update = Object.assign(toUpdate, UpdateCategoriaDto)
@@ -65,7 +65,7 @@ export class CategoriaService {
     return category_muscleUpdated;
   }
 
-  async remove(id: number, user: userActiveInterface):Promise<void>{
+  async remove(id: string, user: userActiveInterface):Promise<void>{
     const categoriaTemp = await this.findOne(id,user);
     
     if( categoriaTemp ) {

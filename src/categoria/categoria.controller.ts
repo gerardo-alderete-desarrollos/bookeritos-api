@@ -70,7 +70,7 @@ export class CategoriaController {
     @Param('id') id: string, 
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.categoriaService.findOne(+id, user);
+    const data = await this.categoriaService.findOne(id, user);
 
     res.status(HttpStatus.OK).json({
       data,
@@ -93,7 +93,7 @@ export class CategoriaController {
     @Body() UpdateCategoriaDto: UpdateCategoriaDto,
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.categoriaService.update(+id, UpdateCategoriaDto, user);
+    const data = await this.categoriaService.update(id, UpdateCategoriaDto, user);
     
     res.status(HttpStatus.OK).json({
       data,
@@ -114,7 +114,7 @@ export class CategoriaController {
     @Param('id') id: string,
     @Res() res: Response,
     @ActiveUser() user: userActiveInterface) {
-    const data = await this.categoriaService.remove(+id, user);
+    const data = await this.categoriaService.remove(id, user);
 
     res.status(HttpStatus.OK).json({
       data,
