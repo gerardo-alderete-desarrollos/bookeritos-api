@@ -59,6 +59,8 @@ async findOne(id: string) {
     },
   });
 
+  console.log('Usuarios Suscripción:', usuariosSuscripcion);
+
   // Filtrar por usuario
   const suscripcionByUser = usuariosSuscripcion.filter(us => us.user.id === id);
 
