@@ -10,7 +10,7 @@ import { Response } from 'express';
 import { Estatus } from 'src/common/enums/estatus.enum';
 import { UpdateUsuarioSuscripcioneDto } from './dto/update-usuario-suscripcione.dto';
 
-@Controller('usuario-suscripciones')
+@Controller('usuario-suscripciones') 
 export class UsuarioSuscripcionesController {
   constructor(private readonly usuarioSuscripcionesService: UsuarioSuscripcionesService) {}
 
@@ -50,7 +50,7 @@ export class UsuarioSuscripcionesController {
 
        return res.status(HttpStatus.OK).json({
           data,
-          message: `Se obtuno la suscripcion`,
+          message: data.length > 0 ? `Se obtuvieron ${data.length} Suscripciones` : 'No se encontraron suscripciones para este usuario',
           status: 200
         }) 
   }

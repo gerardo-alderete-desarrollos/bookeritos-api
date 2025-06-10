@@ -51,12 +51,17 @@ export class UsuarioSuscripcionesService {
   }
 
 async findOne(id: string) {
-  const usuariosSuscripcion: UsuarioSuscripcionEntity[] = await this.usuarioSuscripcionRepository.find({
-    relations:{
+   // Buscar las suscripciones con relaciones
+   const usuariosSuscripcion = await this.usuarioSuscripcionRepository.find({
+    relations: {
       user: true,
       suscription: true,
-    }});
-    const suscripcionByUser = usuariosSuscripcion.filter( us=> us.user.id = id);
+    },
+  });
+
+  // Filtrar por usuario
+  const suscripcionByUser = usuariosSuscripcion.filter(us => us.user.id === id);
+
   return suscripcionByUser;
 }
 
