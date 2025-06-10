@@ -13,13 +13,15 @@ import { CreateInventarioLibroDto } from 'src/inventario-libros/dto/create-inven
 
 
 @ApiTags('Libros')
-@ApiBearerAuth()
-@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+//@ApiBearerAuth()
+//@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])@Controller('libros')
 @Controller('libros')
 export class LibroController {
   constructor(private readonly libroService: LibroService) {}
 
   @Post()
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Crea un Libro'
   })
@@ -41,7 +43,8 @@ export class LibroController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Obtiene todos los Libros' })
+/*   @ApiBearerAuth()
+  @ApiOperation({ summary: 'Obtiene todos los Libros' }) */
   @ApiResponse({ status: 200, description: 'Regresa todos los Libros' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
   async findAll(@ActiveUser() user: userActiveInterface) {
@@ -65,8 +68,6 @@ export class LibroController {
     }
   }
   
-
-
   @Get('/inventario')
   @ApiOperation({
     summary: 'Obtiene todos los Libros'
@@ -110,6 +111,8 @@ export class LibroController {
   }
 
   @Patch('/inventario/:id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Actualiza un Libro agregandole un nuevo ejemplar'
   })
@@ -132,6 +135,8 @@ export class LibroController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Actualiza un Libros'
   })
@@ -154,6 +159,8 @@ export class LibroController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Elimina un Libro'
   })

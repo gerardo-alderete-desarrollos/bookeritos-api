@@ -42,8 +42,8 @@ export class UsuarioSuscripcionesController {
   @ApiOperation({
     summary: 'Obtiene todas la suscripciones'
   })
-  @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+  //@ApiBearerAuth()
+  //@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @Get(':id')
   async findSuscriptionsByUser(@Res() res: Response,@Param('id') id: string) {
     const data = await  this.usuarioSuscripcionesService.findOne(id); 
@@ -58,8 +58,8 @@ export class UsuarioSuscripcionesController {
   @ApiOperation({
     summary: 'Obtiene todas la suscripciones'
   })
-  @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+  //@ApiBearerAuth()
+  //@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @Get()
   async findUsersSuscriptions(@Res() res: Response) {
     const data = await  this.usuarioSuscripcionesService.findHistorialSuscription(); 
@@ -73,8 +73,8 @@ export class UsuarioSuscripcionesController {
   @ApiOperation({
     summary: 'Obtiene todas la suscripciones'
   })
-  @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+  //@ApiBearerAuth()
+  //@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @Patch('/estatus/:id')
   async changeStatus(
     @Param('id') id: string,

@@ -10,13 +10,15 @@ import { Response } from 'express';
 import { userActiveInterface } from 'src/common/interfaces/user-active.interface';
 
 @ApiTags('Autor')
-@ApiBearerAuth()
-@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+//@ApiBearerAuth()
+//@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
 @Controller('autores')
 export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
   @Post()
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Crea un Autor'
   })
@@ -81,6 +83,8 @@ export class AuthorController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Actualiza una Editorial'
   })
@@ -103,6 +107,8 @@ export class AuthorController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Elimina un Autor'
   })

@@ -39,8 +39,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Obtienes todos los usuarios'
   })
-  @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
+  /* @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR]) */
   async findAll(
     @Res() res: Response, 
     @ActiveUser() user: userActiveInterface
@@ -56,8 +56,8 @@ export class UsersController {
 
   @Get('inventario')
   @ApiOperation({ summary: 'Obtiene todos los usuarios con su inventario' })
-  @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR])
+  /* @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR]) */
   async findAllInventario(
     @Res() res: Response, 
     @ActiveUser() user: userActiveInterface
@@ -112,8 +112,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Encuentras un usuario'
   })
-  @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+  /* @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER]) */
   async findOne( 
     @Param('id') id: string,
     @Res() res: Response,

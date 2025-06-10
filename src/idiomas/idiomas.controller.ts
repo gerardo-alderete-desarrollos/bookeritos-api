@@ -14,8 +14,8 @@ export class IdiomasController {
   @ApiOperation({
     summary: 'Obtiene todos los idiomas'
   })
-  @ApiBearerAuth()
-  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+ // @ApiBearerAuth()
+  //@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @Get()
   async findAll(@Res() res: Response) { 
     const data = await  this.idiomasService.findAll(); 

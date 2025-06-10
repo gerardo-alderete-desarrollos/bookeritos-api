@@ -10,13 +10,15 @@ import { CreateCategoriaDto } from './dto/create-categoria_muscle.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria_muscle.dto';
 
 @ApiTags('Categorias')
-@ApiBearerAuth()
-@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+//@ApiBearerAuth()
+//@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
 @Controller('categorias')
 export class CategoriaController {
   constructor(private readonly categoriaService: CategoriaService) {}
  
   @Post()
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Crea una Categoria'
   })
@@ -81,6 +83,8 @@ export class CategoriaController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Actualiza una Categoria'
   })
@@ -103,6 +107,8 @@ export class CategoriaController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Elimina una Categoria'
   })

@@ -2,16 +2,20 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, Htt
 import { InventarioLibrosService } from './inventario-libros.service';
 import { CreateInventarioLibroDto } from './dto/create-inventario-libro.dto';
 import { UpdateInventarioLibroDto } from './dto/update-inventario-libro.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ActiveUser } from 'src/common/decorators/active-user.decorator';
 import { userActiveInterface } from 'src/common/interfaces/user-active.interface';
+import { AuthDecorator } from 'src/auth/decorators/auth.decorator';
+import { Rol } from 'src/common/enums/rol.enum';
 
 @Controller('inventario-libros')
 export class InventarioLibrosController {
   constructor(private readonly inventarioLibrosService: InventarioLibrosService) {}
 
   @Post()
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   create(@Body() createInventarioLibroDto: CreateInventarioLibroDto) {
     return this.inventarioLibrosService.create(createInventarioLibroDto);
   }
@@ -85,11 +89,15 @@ export class InventarioLibrosController {
   
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   update(@Param('id') id: string, @Body() updateInventarioLibroDto: UpdateInventarioLibroDto) {
     return this.inventarioLibrosService.update(id, updateInventarioLibroDto);
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   remove(@Param('id') id: string) {
     return this.inventarioLibrosService.remove(id);
   }

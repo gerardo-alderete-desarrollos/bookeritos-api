@@ -10,13 +10,15 @@ import { userActiveInterface } from 'src/common/interfaces/user-active.interface
 import { Response } from 'express';
 
 @ApiTags('Editorial')
-@ApiBearerAuth()
-@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
+//@ApiBearerAuth()
+//@AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
 @Controller('editoriales')
 export class EditorialController { 
   constructor(private readonly editorialService: EditorialService) {}
 
   @Post()
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Crea una Editorial'
   })
@@ -82,6 +84,8 @@ export class EditorialController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Actualiza una Editorial'
   })
@@ -104,6 +108,8 @@ export class EditorialController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @AuthDecorator([Rol.ADMIN, Rol.SUPERVISOR, Rol.MEMBER])
   @ApiOperation({
     summary: 'Elimina una Editorial'
   })
