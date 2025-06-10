@@ -50,22 +50,30 @@ export class UsuarioSuscripcionesService {
     }
   }
 
-async findOne(id: string) {
-   // Buscar las suscripciones con relaciones
-   const usuariosSuscripcion = await this.usuarioSuscripcionRepository.find({
-    relations: {
-      user: true,
-      suscription: true,
-    },
-  });
-
-  console.log('Usuarios Suscripción:', usuariosSuscripcion);
-
-  // Filtrar por usuario
-  const suscripcionByUser = usuariosSuscripcion.filter(us => us.user.id === id);
-
-  return suscripcionByUser;
-}
+  async findOne(id: string) {
+    try {
+      // Buscar las suscripciones con relaciones
+      const usuariosSuscripcion = await this.usuarioSuscripcionRepository.find({
+        relations: {
+          user: true,
+          suscription: true,
+        },
+      });
+  
+      console.log('Usuarios Suscripción:', usuariosSuscripcion);
+  
+      // Filtrar por usuario, asegurando que user no sea null
+      const suscripcionByUser = usuariosSuscripcion.filter(
+        us => us.user && us.user.id === id
+      );
+  
+      return suscripcionByUser;
+    } catch (error) {
+      console.error('Error al buscar la suscripción del usuario:', error);
+      throw new Error('No se pudo obtener la suscripción del usuario');
+    }
+  }
+  
 
 async changeStatusSuscription(id: string , estatus: Estatus){
   const toUpdate: any = await this.usuarioSuscripcionRepository.findBy({id});
