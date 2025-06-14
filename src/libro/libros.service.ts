@@ -66,7 +66,11 @@ export class LibroService {
       relations: { 
         author: true,
         categorias: true,
-        inventario: true,
+        inventario: {
+          idioma: true,
+          editorial: true,
+        },
+      
       },
       order: { name: 'asc'  }, // Ordenar por título ascendente
      /*  where: { 
